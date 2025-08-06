@@ -87,10 +87,17 @@ namespace HRSystem.Common
             return await GetOneByIdAsync(Id) != null ? true : false;
         }
 
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            await _context.SaveChangesAsync(cancellationToken);
-            return await _context.SaveChangesAsync(cancellationToken);
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            catch (Exception ex) 
+            {
+                return false;
+            }
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
