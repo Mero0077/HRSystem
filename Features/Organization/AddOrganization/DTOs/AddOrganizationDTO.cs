@@ -1,11 +1,10 @@
-﻿namespace HRSystem.Models
+﻿namespace HRSystem.Features.Organization.AddOrganization.DTOs
 {
-    public class Organization:BaseModel
+    public class AddOrganizationDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public string Industry { get; set; }
 
-        public virtual ICollection<Company> companies { get; set; }
     }
 }

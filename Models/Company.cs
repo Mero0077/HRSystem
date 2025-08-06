@@ -8,8 +8,8 @@
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        public Organization Organization { get; set; }
-        public Guid OrganizationId { get; set; }
-        public ICollection<Branch> Branches { get; set; }
+        public virtual Organization Organization { get; set; }
+        public virtual Guid OrganizationId { get; set; }
+        public virtual ICollection<Branch> Branches { get; set; }
     }
 }

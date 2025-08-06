@@ -8,6 +8,6 @@
         public string TimeZone { get; set; }
         public Company Company { get; set; }
         public Guid CompanyId { get; set; }
-        public ICollection<Department> Departments { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }

@@ -1,4 +1,8 @@
 
+using HRSystem.Common;
+using HRSystem.Common.AppDbContext;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace HRSystem
@@ -9,14 +13,21 @@ namespace HRSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+           options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+               .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
+               .EnableSensitiveDataLogging(true)
+               .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+               .UseLazyLoadingProxies());
+
+
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
 
 
             builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
+            builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
 
             var app = builder.Build();
 
