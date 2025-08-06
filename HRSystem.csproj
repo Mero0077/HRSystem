@@ -7,7 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+	  <PackageReference Include="AutoMapper" Version="14.0.0" />
+	  <PackageReference Include="FluentValidation" Version="12.0.0" />
+	  <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+	  <PackageReference Include="Hangfire" Version="1.8.20" />
+	  <PackageReference Include="Hangfire.AspNetCore" Version="1.8.20" />
+	  <PackageReference Include="Hangfire.SqlServer" Version="1.8.20" />
+	  <PackageReference Include="MediatR" Version="13.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.17" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5" />
+	  <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.12.0" />
+	  <PackageReference Include="PredicateExtensions" Version="1.0.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
   </ItemGroup>
 
 </Project>
