@@ -1,0 +1,11 @@
+﻿namespace HRSystem.Models
+{
+    public class Organization:BaseModel
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Industry { get; set; }
+
+        public ICollection<Company> companies { get; set; }
+    }
+}
