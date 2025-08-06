@@ -1,6 +1,8 @@
 
+using FluentValidation;
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
+using HRSystem.Features.Branch.Create_Branch;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Diagnostics;
@@ -27,6 +29,8 @@ namespace HRSystem
             builder.Services.AddOpenApi();
 
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
+            builder.Services.AddScoped(typeof(EndPointBaseParameters<>));
+            builder.Services.AddValidatorsFromAssembly(typeof(CreateBranchRequestViewModelValidator).Assembly);
             builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

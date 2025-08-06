@@ -29,7 +29,9 @@ namespace HRSystem.Features.Branch.Create_Branch.Endpoint
             if (!result.IsSuccess)
                 return EndPointResponse<CreateBranchResponseViewModel>.Failure("Cannot Create Branch",result.ErrorCodes);
 
-            var responseViewModel = mapper.Map<CreateBranchResponseViewModel>(requestDTO);
+            var responseEntity = mapper.Map<Models.Branch>(requestDTO);
+
+            var responseViewModel = mapper.Map<CreateBranchResponseViewModel>(responseEntity);
 
             return EndPointResponse<CreateBranchResponseViewModel>.Success(responseViewModel);
           
