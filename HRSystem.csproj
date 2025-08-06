@@ -21,17 +21,14 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5" />
 	  <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.12.0" />
 	  <PackageReference Include="PredicateExtensions" Version="1.0.0" />
+	  <PackageReference Include="Scalar.AspNetCore" Version="2.6.8" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.7" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Features\Organization\AddOrganization\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Branch\Create Branch\Endpoint\" />
   </ItemGroup>
 
 </Project>
