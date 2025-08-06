@@ -30,8 +30,4 @@
     <Folder Include="Features\Organization\AddOrganization\Queries\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Branch\Create Branch\Endpoint\" />
-  </ItemGroup>
-
 </Project>
