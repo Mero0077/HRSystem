@@ -1,4 +1,6 @@
 
+using System.Reflection;
+
 namespace HRSystem
 {
     public class Program
@@ -10,8 +12,11 @@ namespace HRSystem
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+
+            builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
 
             var app = builder.Build();
 
