@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using HRSystem.Common.Views;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +13,12 @@ namespace HRSystem.Common
     {
         protected IMediator mediator;
         protected IValidator<TRequest> validator;
+        protected IMapper mapper;
         public BaseEndPoint(EndPointBaseParameters<TRequest> parameters)
         {
             mediator = parameters.Mediator;
             validator = parameters.Validator;
+            mapper = parameters.Mapper;
         }
 
         protected EndPointResponse<TResult> ValidateRequest(TRequest request)

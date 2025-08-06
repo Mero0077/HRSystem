@@ -2,7 +2,7 @@
 {
     public class BaseModel
     {
-        public Guid ID { get; set; }=Guid.NewGuid();
+        public Guid Id { get; set; }=Guid.NewGuid();
         public bool IsDeleted { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -23,6 +23,11 @@
 	  <PackageReference Include="PredicateExtensions" Version="1.0.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Organization\AddOrganization\Queries\" />
   </ItemGroup>
 
 </Project>

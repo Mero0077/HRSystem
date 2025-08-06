@@ -1,11 +1,10 @@
-﻿namespace HRSystem.Models
+﻿namespace HRSystem.Features.Organization.AddOrganization
 {
-    public class Organization:BaseModel
+    public class AddOrganizationReponseVM
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Industry { get; set; }
-
-        public virtual ICollection<Company> companies { get; set; }
     }
 }
