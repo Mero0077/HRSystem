@@ -28,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Common\Role\Commands\" />
+    <Folder Include="Features\Common\User\Commands\" />
     <Folder Include="Features\Organization\RemoveOrganization\Queries\" />
     <Folder Include="Features\Role\AssignRoleToUser\MappingProfile\" />
   </ItemGroup>

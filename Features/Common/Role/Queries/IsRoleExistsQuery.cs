@@ -3,8 +3,9 @@ using HRSystem.Common;
 using MediatR;
 using HRSystem.Features.Role.AssignRoleToUser.DTOs;
 using HRSystem.Features.Role.AssignRoleToUser.Queries;
+using HRSystem.Common.Enums;
 
-namespace HRSystem.Features.Common
+namespace HRSystem.Features.Common.Role.Queries
 {
     public record IsRoleExistsQuery(Guid RoleId) : IRequest<RequestResult<bool>>;
     public class IsRoleExistsQueryHandler : RequestHandlerBase<IsRoleExistsQuery, bool>
@@ -22,7 +23,7 @@ namespace HRSystem.Features.Common
             bool exists = res != null;
             return exists ?
                 RequestResult<bool>.Success(exists) :
-                RequestResult<bool>.Failure("Role does not exist");
+                RequestResult<bool>.Failure("Role does not exist",ErrorCodes.NotFound);
         }
     }
 }
