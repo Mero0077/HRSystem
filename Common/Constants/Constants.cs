@@ -12,6 +12,7 @@
 
         public static string BranchLocationNotEmptyValidator => "Branch Location is required";
 
+        public static string JwtKeyName = "JWT_SECRET_KEY";
         public static string BranchLocationMaximumLengthValidator => "Location cannot exceed 100 characters.";
     }
 }
