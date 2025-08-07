@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Organization\RemoveOrganization\Queries\" />
+    <Folder Include="Features\Role\AssignRoleToUser\MappingProfile\" />
   </ItemGroup>
 
 </Project>
