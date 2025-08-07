@@ -1,83 +1,75 @@
-HR Management System
-⚠️ Currently under active development – Core modules are being built using best practices including Vertical Slicing, CQRS, Redis Caching, and Clean Architecture.
+# 🚀 HR Management System
 
-📌 Overview
-This Project is a modern, dynamic, and highly scalable Human Resource Management System (HRMS) designed for real-world enterprise use. Built with a clean and modular architecture, it centralizes essential HR functionalities like organization management, employee lifecycle, time tracking, payroll, and internal notifications.
+![Status](https://img.shields.io/badge/status-active%20development-yellow) 
+![.NET](https://img.shields.io/badge/.NET-8-blue)
+![Architecture](https://img.shields.io/badge/architecture-clean%20architecture-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
-This project is the master-level capstone of Youssef Hossam, aiming to meet real-world enterprise standards and demonstrate architectural excellence for future employment at a top-tier tech company.
+A modern, dynamic, and highly scalable Human Resource Management System (HRMS) built with architectural excellence.
 
-📄 Software Requirements Specification (SRS)
-Project Type: HR Management System
+**⚠️ Currently under active development**  
+Core modules are being built using best practices including Vertical Slicing, CQRS, Redis Caching, and Clean Architecture.
 
-Status: In Progress 🚧
+## 🌟 Overview
 
-Target Audience: Internal HR Departments, SaaS HR startups
+This project is a master-level capstone HRMS designed for real-world enterprise use. It centralizes essential HR functionalities with a clean, modular architecture.
 
-🧠 Purpose
-This system is designed to handle the complete lifecycle of HR processes using a clean, modular, and highly scalable architecture. It empowers developers and stakeholders with clarity on:
+## 🎯 Purpose
 
-Module responsibilities
+Empower HR processes with a system that demonstrates:
+- Clear module responsibilities
+- Well-defined system flows
+- Proper business logic separation
+- Robust data access policies
+- Effective domain modeling
 
-System flows
+## 🏗️ Core Modules
 
-Business logic separation
+| Module                      | Description                                                                 |
+|-----------------------------|-----------------------------------------------------------------------------|
+| � Org Structure            | Manage Organization → Company → Branch → Department hierarchy              |
+| 👤 Employee Management     | Add, update, archive employee data; track job roles, status, and history   |
+| 🕒 Shift & Attendance      | Configure shifts, assign employees, and track time logs                    |
+| 💰 Payroll                 | Salary calculations, tax/deductions logic, payslip generation              |
+| 🔔 Requests & Notifications| Leave requests, approval workflows, and real-time notifications            |
+| 🔐 RBAC                    | Role-Based Access Control for secure and scoped access                     |
 
-Data access policies
+## ⚙️ Architecture & Technologies
 
-Domain modeling
+### 🧱 Core Architecture
+- **Vertical Slicing** - Feature encapsulation (API + Domain + Infrastructure + UI)
+- **CQRS** - Command Query Responsibility Separation using MediatR
+- **Clean Architecture** - Maintainable and scalable codebase
+- **SOLID Principles** - Professional-grade design patterns
 
-📦 Core Features (Modules)
-Module	Description
-🏢 Org Structure	Manage Organization → Company → Branch → Department hierarchy
-👤 Employee Management	Add, update, archive employee data; track job roles, status, and history
-🕒 Shift & Attendance	Configure shifts, assign employees, and track time logs
-💰 Payroll	Salary calculations, tax/deductions logic, payslip generation
-🔔 Requests & Notifications	Leave requests, approval workflows, and real-time notifications
-🔐 RBAC	Role-Based Access Control for secure and scoped access
+### 🛠️ Technologies
+| Technology               | Purpose                                |
+|--------------------------|----------------------------------------|
+| .NET 8 / C#             | Backend framework                      |
+| Entity Framework Core    | Modern ORM with LINQ support           |
+| Redis                    | High-performance caching               |
+| SQL Server               | Relational database                    |
+| MediatR                  | CQRS implementation                    |
+| FluentValidation         | Declarative input validation           |
+| SignalR                  | Real-time updates and alerts           |
+| AutoMapper               | Object-to-object mapping               |
+| Swagger/OpenAPI          | API documentation                      |
+| Docker (Planned)         | Containerization                      |
 
-🧩 Architecture
-✅ Vertical Slicing – Each feature is encapsulated (API + Domain + Infrastructure + UI)
+## 🚀 Why This Project Matters
 
-✅ CQRS – Separation of reads and writes using MediatR
+This isn't just code - it's a production-grade HR system demonstrating:
 
-✅ Redis Caching – For optimized performance and faster queries
+✅ Enterprise-level design  
+✅ Extensibility for future growth  
+✅ Performance optimization  
+✅ Maintainability at scale  
+✅ Architectural best practices  
 
-✅ Entity Framework Core – Modern ORM with flexibility and LINQ support
+## 📌 Project Status
 
-✅ Fluent Validation – Declarative input validation per request
+This project is currently in active development as part of my professional portfolio. Core modules are being implemented with production readiness in mind.
 
-✅ SignalR/WebSockets – Real-time updates and alerts
+## 📄 License
 
-✅ AutoMapper – Seamless object-to-object mapping
-
-✅ SOLID & Clean Architecture – Maintainable and scalable codebase
-
-🔍 Technologies
-.NET 8 / C#
-
-Entity Framework Core
-
-Redis
-
-SQL Server
-
-MediatR
-
-FluentValidation
-
-SignalR
-
-Swagger / OpenAPI
-
-Docker (Planned)
-
-🎯 Why This Project Matters
-This project isn't just about writing code. It's about building a real-world, production-grade HR system with attention to:
-
-Enterprise-level design
-
-Extensibility
-
-Performance
-
-Maintainability
+MIT License - See [LICENSE](LICENSE) for details.
