@@ -1,19 +1,23 @@
 ﻿using HRSystem.Common.Constants;
+using HRSystem.Features.Auth.Jwt.interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
-namespace HRSystem.Common.Helper
+namespace HRSystem.Features.Auth.Jwt.Helper
 {
     public static class JwtHelper
     {
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
-            var jwtSecretKey = Environment.GetEnvironmentVariable(Constants.Constants.JwtKeyName);
+            var jwtSecretKey = Environment.GetEnvironmentVariable(HRSystem.Common.Constants.Constants.JwtKeyName);
             if(string.IsNullOrEmpty(jwtSecretKey))
                 throw new Exception("JWT_SECRET_KEY is not set in environment variables.");
             var encodeSecretey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey));
@@ -48,6 +52,8 @@ namespace HRSystem.Common.Helper
                         ValidateLifetime = true,
                     };
                 });
+            services.AddScoped<IJwtGenerateHandler,GenerateToken>();
+
           return services;
         }
     }
