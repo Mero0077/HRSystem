@@ -3,7 +3,6 @@
 ![Status](https://img.shields.io/badge/status-active%20development-yellow) 
 ![.NET](https://img.shields.io/badge/.NET-8-blue)
 ![Architecture](https://img.shields.io/badge/architecture-vertical%20slicing%20%2B%20cqrs-ff69b4)
-![License](https://img.shields.io/badge/license-MIT-blue)
 ![Audience](https://img.shields.io/badge/audience-enterprise%20HR%20%7C%20SaaS%20startups-orange)
 
 **Modern HRMS built with Vertical Slice Architecture and CQRS patterns**
