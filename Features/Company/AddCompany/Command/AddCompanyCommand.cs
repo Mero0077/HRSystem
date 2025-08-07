@@ -20,7 +20,7 @@ namespace HRSystem.Features.Company.AddCompany.Command
         public override async Task<RequestResult<AddCompanyResponseVM>> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
         {
          var exists = await mediator.Send(new CheckIfCompanyAlreadyExistsQuery(request.AddCompanyDTO.Name));
-            if (exists) return RequestResult<AddCompanyResponseVM>.Failure("already exists", ErrorCodes.AlreadyExists);
+            if (!exists.IsSuccess) return RequestResult<AddCompanyResponseVM>.Failure("already exists", ErrorCodes.AlreadyExists);
 
          var res= await _CompanyRepository.AddAsync(mapper.Map<HRSystem.Models.Company>(request.AddCompanyDTO));
                   await _CompanyRepository.SaveChangesAsync();
