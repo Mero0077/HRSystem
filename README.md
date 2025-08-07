@@ -2,74 +2,65 @@
 
 ![Status](https://img.shields.io/badge/status-active%20development-yellow) 
 ![.NET](https://img.shields.io/badge/.NET-8-blue)
-![Architecture](https://img.shields.io/badge/architecture-clean%20architecture-brightgreen)
+![Architecture](https://img.shields.io/badge/architecture-vertical%20slicing%20%2B%20cqrs-ff69b4)
 ![License](https://img.shields.io/badge/license-MIT-blue)
+![Audience](https://img.shields.io/badge/audience-enterprise%20HR%20%7C%20SaaS%20startups-orange)
 
-A modern, dynamic, and highly scalable Human Resource Management System (HRMS) built with architectural excellence.
+**Modern HRMS built with Vertical Slice Architecture and CQRS patterns**
 
-**⚠️ Currently under active development**  
-Core modules are being built using best practices including Vertical Slicing, CQRS, Redis Caching, and Clean Architecture.
+**⚠️ Active Development**  
+Core modules being implemented with:
+- 🍰 **Vertical Slicing** (feature-first organization)
+- ↔️ **CQRS** (clear command/query separation)
+- 🚀 **Redis-accelerated performance**
 
-## 🌟 Overview
+## 🎯 Target Audience
 
-This project is a master-level capstone HRMS designed for real-world enterprise use. It centralizes essential HR functionalities with a clean, modular architecture.
+Built for:
+- **Enterprise HR Teams** needing scalable workflows  
+- **Sass Tech Startups** wanting modular foundation  
+- **Dev Teams** studying Vertical Slice Architecture  
 
-## 🎯 Purpose
+## ⚙️ Core Architecture
 
-Empower HR processes with a system that demonstrates:
-- Clear module responsibilities
-- Well-defined system flows
-- Proper business logic separation
-- Robust data access policies
-- Effective domain modeling
+### 🍰 Vertical Slice Architecture
+- Features organized as self-contained verticals (API → Domain → Infrastructure)
+- No traditional horizontal layers (no "Services" folder)
+- Minimal cross-slice dependencies
 
-## 🏗️ Core Modules
+### ↔️ CQRS Implementation
+- **MediatR** for command/query handling
+- Separate read/write models
+- Optimized query paths with **Redis caching**
 
-| Module                      | Description                                                                 |
-|-----------------------------|-----------------------------------------------------------------------------|
-| � Org Structure            | Manage Organization → Company → Branch → Department hierarchy              |
-| 👤 Employee Management     | Add, update, archive employee data; track job roles, status, and history   |
-| 🕒 Shift & Attendance      | Configure shifts, assign employees, and track time logs                    |
-| 💰 Payroll                 | Salary calculations, tax/deductions logic, payslip generation              |
-| 🔔 Requests & Notifications| Leave requests, approval workflows, and real-time notifications            |
-| 🔐 RBAC                    | Role-Based Access Control for secure and scoped access                     |
+### 🛠️ Key Technologies
+| Component       | Technology Stack           |
+|-----------------|----------------------------|
+| Core Framework | .NET 8                     |
+| Data Access    | EF Core + Dapper           |
+| Caching        | Redis                      |
+| Validation     | FluentValidation           |
+| Real-Time      | SignalR                    |
+| API Docs       | Swagger/OpenAPI            |
 
-## ⚙️ Architecture & Technologies
+## 🏗️ Feature Modules
+| Vertical Slice          | Key Capabilities                          |
+|-------------------------|------------------------------------------|
+| **Org Structure**       | Company → Branch → Dept hierarchy        |
+| **Employee Lifecycle**  | Hiring → Promotion → Offboarding         |
+| **Time Tracking**       | Shifts, Attendance, Overtime             |
+| **Payroll Engine**      | Tax calculations + Payslip generation    |
 
-### 🧱 Core Architecture
-- **Vertical Slicing** - Feature encapsulation (API + Domain + Infrastructure + UI)
-- **CQRS** - Command Query Responsibility Separation using MediatR
-- **Clean Architecture** - Maintainable and scalable codebase
-- **SOLID Principles** - Professional-grade design patterns
+## Why This Architecture?
+- 💡 **Feature-focused development** - No layer jumping
+- 🚫 **No abstraction pollution** - Only create interfaces when needed
+- 🏎️ **Faster iteration** - Modify features without layer-wide changes
+- 📊 **Clear ownership** - All feature code colocated
 
-### 🛠️ Technologies
-| Technology               | Purpose                                |
-|--------------------------|----------------------------------------|
-| .NET 8 / C#             | Backend framework                      |
-| Entity Framework Core    | Modern ORM with LINQ support           |
-| Redis                    | High-performance caching               |
-| SQL Server               | Relational database                    |
-| MediatR                  | CQRS implementation                    |
-| FluentValidation         | Declarative input validation           |
-| SignalR                  | Real-time updates and alerts           |
-| AutoMapper               | Object-to-object mapping               |
-| Swagger/OpenAPI          | API documentation                      |
-| Docker (Planned)         | Containerization                      |
+![Vertical Slice Diagram](https://github.com/your-repo/docs/raw/main/vsa-diagram.png) *(example diagram link)*
 
-## 🚀 Why This Project Matters
-
-This isn't just code - it's a production-grade HR system demonstrating:
-
-✅ Enterprise-level design  
-✅ Extensibility for future growth  
-✅ Performance optimization  
-✅ Maintainability at scale  
-✅ Architectural best practices  
-
-## 📌 Project Status
-
-This project is currently in active development as part of my professional portfolio. Core modules are being implemented with production readiness in mind.
-
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE) for details.
+## 🚧 Project Status
+Actively developing core verticals. Current focus:
+1. Employee Management (80% complete)
+2. Org Structure (60% complete)
+3. Redis integration (in progress)
