@@ -2,6 +2,7 @@
 using FluentValidation;
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
+using HRSystem.Common.Helper;
 using HRSystem.Features.Branch.Create_Branch;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -14,6 +15,8 @@ namespace HRSystem
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("JWT KEY: " + Environment.GetEnvironmentVariable("JWT_SECRET_KEY"));
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -34,7 +37,9 @@ namespace HRSystem
             builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            var app = builder.Build();
+            builder.Services.AddJwtAuthentication(builder.Configuration);
+
+                var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
