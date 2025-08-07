@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Organization\AddOrganization\Queries\" />
+    <Folder Include="Features\Organization\RemoveOrganization\Queries\" />
   </ItemGroup>
 
 </Project>
