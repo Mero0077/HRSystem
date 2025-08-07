@@ -2,7 +2,7 @@
 using FluentValidation;
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
-using HRSystem.Common.Helper;
+using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Branch.Create_Branch;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -38,7 +38,7 @@ namespace HRSystem
             builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddJwtAuthentication(builder.Configuration);
-
+            
                 var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -1,4 +1,4 @@
-﻿namespace HRSystem.Common.Helper
+﻿namespace HRSystem.Features.Auth.Jwt.Helper
 {
     public class JwtOptions
     {
