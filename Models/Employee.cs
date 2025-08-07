@@ -1,6 +1,6 @@
 ﻿namespace HRSystem.Models
 {
-    public class Employee : BaseModel
+    public class Employee : User
     {
         public string EmployeeCode { get; set; }
         public string JobTitle { get; set; }
