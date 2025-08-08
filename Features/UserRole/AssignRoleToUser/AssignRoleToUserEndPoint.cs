@@ -2,11 +2,11 @@
 using HRSystem.Common.Enums;
 using HRSystem.Common.Views;
 using HRSystem.Features.Role.AssignRoleToUser.Commands;
-using HRSystem.Features.Role.AssignRoleToUser.DTOs;
+using HRSystem.Features.UserRole.AssignRoleToUser.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;
 
-namespace HRSystem.Features.Role.AssignRoleToUser
+namespace HRSystem.Features.UserRole.AssignRoleToUser
 {
     public class AssignRoleToUserEndPoint : BaseEndPoint<AssignRoleToUserRequestVM, AssignRoleToUserResponseVM>
     {
@@ -17,7 +17,7 @@ namespace HRSystem.Features.Role.AssignRoleToUser
         [HttpPost]
         public async Task<EndPointResponse<AssignRoleToUserResponseVM>> AssignRoleToUser([FromBody] AssignRoleToUserRequestVM request)
         {
-          var res= await mediator.Send(new AssignRoleToUserCommand(mapper.Map<AssignRoleToUserDTO>(request)));
+            var res = await mediator.Send(new AssignRoleToUserCommand(mapper.Map<AssignRoleToUserDTO>(request)));
 
             return res.IsSuccess ?
                     EndPointResponse<AssignRoleToUserResponseVM>.Success(res.Data, "Role Assigned To user successfylly1") :

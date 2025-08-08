@@ -1,6 +1,6 @@
-﻿namespace HRSystem.Features.Role.AssignRoleToUser
+﻿namespace HRSystem.Features.UserRole.DeleteUserRole.DTOs
 {
-    public class AssignRoleToUserResponseVM
+    public class DeleteUserRoleDTO
     {
         public Guid RoleId { get; set; }
         public Guid UserId { get; set; }

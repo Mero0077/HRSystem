@@ -19,6 +19,7 @@ namespace HRSystem.Common
             public Task UpdateIncludeAsync(T entity, params string[] modifiedProperties);
 
             public Task<T> DeleteAsync(Guid Id);
+        public Task<bool> DeleteAsyncMass(List<T> entities);
 
             public Task<bool> IsExists(Guid Id);
 

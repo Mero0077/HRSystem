@@ -82,6 +82,16 @@ namespace HRSystem.Common
             return res;
         }
 
+        public async Task<bool> DeleteAsyncMass(List<T> entities)
+        {
+            if (entities == null || !entities.Any())
+                return false;
+
+            _dbSet.RemoveRange(entities);
+            var changes = await _context.SaveChangesAsync();
+            return changes==entities.Count;
+        }
+
         public async Task<bool> IsExists(Guid Id)
         {
             return await GetOneByIdAsync(Id) != null ? true : false;

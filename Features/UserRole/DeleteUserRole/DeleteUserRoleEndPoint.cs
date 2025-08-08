@@ -1,0 +1,26 @@
+﻿using HRSystem.Common;
+using HRSystem.Common.Views;
+using HRSystem.Features.UserRole.DeleteUserRole.Commands;
+using HRSystem.Features.UserRole.DeleteUserRole.DTOs;
+using Microsoft.AspNetCore.Mvc;
+
+namespace HRSystem.Features.UserRole.DeleteUserRole
+{
+    public class DeleteUserRoleEndPoint: BaseEndPoint<DeleteUserRoleRequestVM, bool>
+    {
+        public DeleteUserRoleEndPoint(EndPointBaseParameters<DeleteUserRoleRequestVM> parameters)
+        : base(parameters)
+        {
+        }
+
+
+        [HttpPost]
+        public async Task<EndPointResponse<bool>> DeleteUserRoles([FromBody] DeleteUserRoleRequestVM request)
+        {
+           var res= await mediator.Send(new DeleteUserRoleCommand(mapper.Map<DeleteUserRoleDTO>(request)));
+            return res.IsSuccess ?
+                     EndPointResponse<bool>.Success(true, "Roles deleted!") :
+                     EndPointResponse<bool>.Failure("Roles not deleted!");
+        }
+    }
+}
