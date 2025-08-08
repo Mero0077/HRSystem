@@ -17,9 +17,9 @@ namespace HRSystem.Features.UserRole.DeleteUserRole.Commands
 
         public override async Task<RequestResult<bool>> Handle(DeleteUserRoleCommand request, CancellationToken cancellationToken)
         {
-          var UserRoles= await _UserRoleRepository.Get(e => e.UserId == request.DeleteUserRoleDTO.UserId && e.RoleId == request.DeleteUserRoleDTO.RoleId).ToListAsync();
-          var res= await _UserRoleRepository.DeleteAsyncMass(UserRoles);
-            return !res ?
+          var UserRole= await _UserRoleRepository.Get(e => e.UserId == request.DeleteUserRoleDTO.UserId && e.RoleId == request.DeleteUserRoleDTO.RoleId).FirstOrDefaultAsync();
+          var res= await _UserRoleRepository.DeleteAsync(UserRole.Id);
+            return res!=null ?
                 RequestResult<bool>.Failure("Could not delete roles!") :
                 RequestResult<bool>.Success(true, "roles deleted successfully!");
         }

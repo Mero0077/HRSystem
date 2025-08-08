@@ -2,7 +2,7 @@
 using HRSystem.Common.Enums;
 using HRSystem.Common.Views;
 using HRSystem.Features.Common;
-using HRSystem.Features.Role.AssignRoleToUser.Queries;
+using HRSystem.Features.UserRole.AssignRoleToUser.Queries;
 using HRSystem.Features.Common.Role.Queries
 
 
@@ -24,17 +24,27 @@ namespace HRSystem.Features.UserRole.AssignRoleToUser.Commands
 
         public override async Task<RequestResult<AssignRoleToUserResponseVM>> Handle(AssignRoleToUserCommand request, CancellationToken cancellationToken)
         {
-            var RoleExists = await mediator.Send(new IsRoleExistsQuery(request.AssignRoleToUserDTO.RoleId));
-            if (!RoleExists.IsSuccess) return RequestResult<AssignRoleToUserResponseVM>.Failure("Role does not exist!");
+            foreach (var roleId in request.AssignRoleToUserDTO.RoleIds.Distinct())
+            {
+                var roleCheck = await mediator.Send(new IsRoleExistsQuery(roleId));
+                if (!roleCheck.IsSuccess) return RequestResult<AssignRoleToUserResponseVM>.Failure($"Role {roleId} does not exist!");
+            }
 
-            var UserExists = await mediator.Send(new IsUserExistsQuery(request.AssignRoleToUserDTO.UserId));
-            if (!UserExists.IsSuccess) return RequestResult<AssignRoleToUserResponseVM>.Failure("User does not exist!");
+
+            var userCheck = await mediator.Send(new IsUserExistsQuery(request.AssignRoleToUserDTO.UserId));
+            if (!userCheck.IsSuccess) return RequestResult<AssignRoleToUserResponseVM>.Failure("User does not exist!");
 
 
             var alreadyAssigned = await mediator.Send(new IsUserAlreadyAssignedToThisRoleQuery(request.AssignRoleToUserDTO));
             if (alreadyAssigned.IsSuccess) return RequestResult<AssignRoleToUserResponseVM>.Failure("Role is already assigned!", ErrorCodes.AlreadyExists);
 
-            var res = await _userRoleRepository.AddAsync(mapper.Map<Models.UserRole>(request.AssignRoleToUserDTO));
+            var userRoles = request.AssignRoleToUserDTO.RoleIds.Select(roleid => new HRSystem.Models.UserRole
+            {
+                UserId=request.AssignRoleToUserDTO.UserId,
+                RoleId= roleid
+            }).ToList();
+
+            var res = await _userRoleRepository.AddAsyncRange(userRoles);
             await _userRoleRepository.SaveChangesAsync();
 
             return res != null ?

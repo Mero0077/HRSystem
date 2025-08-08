@@ -7,7 +7,7 @@ namespace HRSystem.Features.UserRole.DeleteUserRole
     {
         public DeleteUserRoleRequestVMValidator()
         {
-            RuleFor(e=>e.RoleId).NotEmpty();
+            RuleFor(e=>e.UserId).NotEmpty();
             RuleFor(e=>e.RoleId).NotEmpty();
         }
     }

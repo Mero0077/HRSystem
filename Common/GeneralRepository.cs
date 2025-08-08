@@ -39,6 +39,12 @@ namespace HRSystem.Common
             return entity;
         }
 
+        public async Task<List<T>> AddAsyncRange(List<T> entities)
+        {
+             await _dbSet.AddRangeAsync(entities);
+            return entities;
+        }
+
         public async Task<T> UpdateAsync(T entity)
         {
             _dbSet.Update(entity);

@@ -13,6 +13,7 @@ namespace HRSystem.Common
             public Task<T> GetOneByIdAsync(Guid Id);
 
             public Task<T> AddAsync(T entity);
+            public Task<List<T>> AddAsyncRange(List<T> entities);
 
             public Task<T> UpdateAsync(T entity);
 
