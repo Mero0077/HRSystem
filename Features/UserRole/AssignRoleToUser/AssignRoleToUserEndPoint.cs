@@ -1,7 +1,7 @@
 ﻿using HRSystem.Common;
 using HRSystem.Common.Enums;
 using HRSystem.Common.Views;
-using HRSystem.Features.Role.AssignRoleToUser.Commands;
+using HRSystem.Features.UserRole.AssignRoleToUser.Commands;
 using HRSystem.Features.UserRole.AssignRoleToUser.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;

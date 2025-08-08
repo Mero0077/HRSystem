@@ -3,7 +3,7 @@ using HRSystem.Common.Enums;
 using HRSystem.Common.Views;
 using HRSystem.Features.Common;
 using HRSystem.Features.UserRole.AssignRoleToUser.Queries;
-using HRSystem.Features.Common.Role.Queries
+using HRSystem.Features.Common.Role.Queries;
 
 
 using MediatR;

@@ -30,7 +30,6 @@
   <ItemGroup>
     <Folder Include="Features\Organization\RemoveOrganization\Queries\" />
     <Folder Include="Features\UserRole\DeleteUserRole\Queries\" />
-    <Folder Include="Features\UserRole\UpdateUserRole\MappingProfile\" />
     <Folder Include="Features\UserRole\UpdateUserRole\Queries\" />
   </ItemGroup>
 

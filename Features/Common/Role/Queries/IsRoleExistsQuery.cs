@@ -1,8 +1,7 @@
 ﻿using HRSystem.Common.Views;
 using HRSystem.Common;
 using MediatR;
-using HRSystem.Features.Role.AssignRoleToUser.DTOs;
-using HRSystem.Features.Role.AssignRoleToUser.Queries;
+using HRSystem.Features.Common.User.Queries;
 using HRSystem.Common.Enums;
 
 namespace HRSystem.Features.Common.Role.Queries
