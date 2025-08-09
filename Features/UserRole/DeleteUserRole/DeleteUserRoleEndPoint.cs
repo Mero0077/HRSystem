@@ -17,10 +17,13 @@ namespace HRSystem.Features.UserRole.DeleteUserRole
         [HttpPost]
         public async Task<EndPointResponse<bool>> DeleteUserRoles([FromBody] DeleteUserRoleRequestVM request)
         {
-           var res= await mediator.Send(new DeleteUserRoleCommand(mapper.Map<DeleteUserRoleDTO>(request)));
+            var validate = ValidateRequest(request);
+            if (!validate.IsSuccess) return validate;
+
+            var res= await mediator.Send(new DeleteUserRoleCommand(mapper.Map<DeleteUserRoleDTO>(request)));
             return res.IsSuccess ?
-                     EndPointResponse<bool>.Success(true, "Roles deleted!") :
-                     EndPointResponse<bool>.Failure("Roles not deleted!");
+                     EndPointResponse<bool>.Success(true, "Role deleted!") :
+                     EndPointResponse<bool>.Failure("Role not deleted!");
         }
     }
 }

@@ -18,7 +18,7 @@ namespace HRSystem.Features.UserRole.AssignRoleToUser.Queries
         public override async Task<RequestResult<bool>> Handle(IsUserAlreadyAssignedToThisRoleQuery request, CancellationToken cancellationToken)
         {
             var res = await _UserRoleRepository.Get(e => e.UserId == request.AssignRoleToUserDTO.UserId && request.AssignRoleToUserDTO.RoleIds.Contains(e.RoleId)).ToListAsync();
-            return res == null ?
+            return res == null || res.Count==0?
                   RequestResult<bool>.Failure("Roles not assigend to this user") :
                   RequestResult<bool>.Success(true, "role is already assigend to user");
         }

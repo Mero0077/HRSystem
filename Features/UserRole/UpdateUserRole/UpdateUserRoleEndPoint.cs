@@ -3,6 +3,7 @@ using HRSystem.Common.Views;
 using HRSystem.Features.UserRole.UpdateUserRole.Orchestrator;
 using HRSystem.Features.UserRole.UpdateUserRole.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Azure.Core;
 
 namespace HRSystem.Features.UserRole.UpdateUserRole
 {
@@ -15,7 +16,10 @@ namespace HRSystem.Features.UserRole.UpdateUserRole
         [HttpPost]
         public async Task<EndPointResponse<UpdateUserRoleResponseVM>> UpdateRole([FromBody] UpdateUserRoleRequestVM updateRoleRequestVM)
         {
-            var res= await mediator.Send(new UpdateUserRoleCommand(mapper.Map<UpdateUserRoleDTO>(updateRoleRequestVM)));
+            var validate = ValidateRequest(updateRoleRequestVM);
+            if (!validate.IsSuccess) return validate;
+
+            var res= await mediator.Send(new UpdateUserRoleOrchestrator(mapper.Map<UpdateUserRoleDTO>(updateRoleRequestVM)));
             return !res.IsSuccess ?
                     EndPointResponse<UpdateUserRoleResponseVM>.Failure("Could not update role!") :
                     EndPointResponse<UpdateUserRoleResponseVM>.Success(res.Data, "Role updated!");

@@ -23,6 +23,7 @@ namespace HRSystem.Features.Role.AddRole.Commands
            if(!exists.IsSuccess) return RequestResult<AddRoleResponseVM>.Failure("Role could not be added!", ErrorCodes.AlreadyExists);
 
             var res= await _RoleRepository.AddAsync(mapper.Map<HRSystem.Models.Role>(request.AddRoleDTO));
+            await _RoleRepository.SaveChangesAsync();
             return res != null ?
                 RequestResult<AddRoleResponseVM>.Success(mapper.Map<AddRoleResponseVM>(res), "Role added") :
                 RequestResult<AddRoleResponseVM>.Failure("Role could not be added!", ErrorCodes.AlreadyExists);

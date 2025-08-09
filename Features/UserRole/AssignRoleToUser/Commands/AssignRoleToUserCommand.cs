@@ -47,8 +47,14 @@ namespace HRSystem.Features.UserRole.AssignRoleToUser.Commands
             var res = await _userRoleRepository.AddAsyncRange(userRoles);
             await _userRoleRepository.SaveChangesAsync();
 
+            var mapped = new AssignRoleToUserResponseVM
+            {
+                UserId = request.AssignRoleToUserDTO.UserId,
+                RoleIds = userRoles.Select(e => e.RoleId).ToList(),
+            };
+
             return res != null ?
-                RequestResult<AssignRoleToUserResponseVM>.Success(mapper.Map<AssignRoleToUserResponseVM>(res), "Role assigned to user successfully!") :
+                RequestResult<AssignRoleToUserResponseVM>.Success(mapper.Map<AssignRoleToUserResponseVM>(mapped), "Role assigned to user successfully!") :
                 RequestResult<AssignRoleToUserResponseVM>.Failure("Role could not be assigned to user!", ErrorCodes.NoError);
 
         }

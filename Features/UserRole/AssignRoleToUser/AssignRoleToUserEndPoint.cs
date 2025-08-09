@@ -17,10 +17,13 @@ namespace HRSystem.Features.UserRole.AssignRoleToUser
         [HttpPost]
         public async Task<EndPointResponse<AssignRoleToUserResponseVM>> AssignRoleToUser([FromBody] AssignRoleToUserRequestVM request)
         {
+            var validate = ValidateRequest(request);
+            if (!validate.IsSuccess) return validate;
+
             var res = await mediator.Send(new AssignRoleToUserCommand(mapper.Map<AssignRoleToUserDTO>(request)));
 
             return res.IsSuccess ?
-                    EndPointResponse<AssignRoleToUserResponseVM>.Success(res.Data, "Role Assigned To user successfylly1") :
+                    EndPointResponse<AssignRoleToUserResponseVM>.Success(res.Data, "Role Assigned To user successfylly!") :
                     EndPointResponse<AssignRoleToUserResponseVM>.Failure("Role was not Assigned To user!", ErrorCodes.NoError);
         }
     }
