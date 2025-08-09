@@ -9,9 +9,9 @@ namespace HRSystem.Features.Common.User.Queries
     public record IsUserExistsQuery(Guid userId) : IRequest<RequestResult<bool>>;
     public class IsUserExistsQueryHandler : RequestHandlerBase<IsUserExistsQuery, bool>
     {
-        private readonly GeneralRepository<Models.User> _userRepository;
+        private readonly IGeneralRepository<Models.User> _userRepository;
 
-        public IsUserExistsQueryHandler(GeneralRepository<Models.User> userRepository,RequestHandlerBaseParameters parameters) : base(parameters)
+        public IsUserExistsQueryHandler(IGeneralRepository<Models.User> userRepository,RequestHandlerBaseParameters parameters) : base(parameters)
         {
             this._userRepository = userRepository;
         }
