@@ -23,6 +23,8 @@ namespace HRSystem.Common.AppDbContext
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<RoleFeature> RoleFeatures { get; set; }
 
     }
 }

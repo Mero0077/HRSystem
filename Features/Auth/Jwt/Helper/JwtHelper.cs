@@ -20,7 +20,7 @@ namespace HRSystem.Features.Auth.Jwt.Helper
             var jwtSecretKey = Environment.GetEnvironmentVariable(HRSystem.Common.Constants.Constants.JwtKeyName);
             if(string.IsNullOrEmpty(jwtSecretKey))
                 throw new Exception("JWT_SECRET_KEY is not set in environment variables.");
-            var encodeSecretey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey));
+            var encodeSecretey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSecretKey));
             return encodeSecretey;
         }
         public static IServiceCollection AddJwtAuthentication(this IServiceCollection services,IConfiguration configuration)

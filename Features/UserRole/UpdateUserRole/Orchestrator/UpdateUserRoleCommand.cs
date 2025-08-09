@@ -8,7 +8,7 @@ using HRSystem.Features.UserRole.UpdateUserRole;
 using HRSystem.Features.UserRole.UpdateUserRole.DTOs;
 using MediatR;
 
-namespace HRSystem.Features.UserRole.UpdateUserRole.Commands
+namespace HRSystem.Features.UserRole.UpdateUserRole.Orchestrator
 {
     public record UpdateUserRoleCommand(UpdateUserRoleDTO UpdateRoleDTO) : IRequest<RequestResult<UpdateUserRoleResponseVM>>;
     public class UpdateRoleCommandHandler : RequestHandlerBase<UpdateUserRoleCommand, UpdateUserRoleResponseVM>
@@ -21,8 +21,8 @@ namespace HRSystem.Features.UserRole.UpdateUserRole.Commands
 
         public override async Task<RequestResult<UpdateUserRoleResponseVM>> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
         {
-          var res=  await mediator.Send(new DeleteUserRoleCommand(mapper.Map<DeleteUserRoleDTO>(request.UpdateRoleDTO)));
-          if(!res.IsSuccess) return RequestResult<UpdateUserRoleResponseVM>.Failure(HRSystem.Common.Enums.ErrorCodes.NotFound);
+            var res = await mediator.Send(new DeleteUserRoleCommand(mapper.Map<DeleteUserRoleDTO>(request.UpdateRoleDTO)));
+            if (!res.IsSuccess) return RequestResult<UpdateUserRoleResponseVM>.Failure(HRSystem.Common.Enums.ErrorCodes.NotFound);
 
             //var assigned = await mediator.Send(new AssignRoleToUserCommand(mapper.Map<AssignRoleToUserDTO>(request.UpdateRoleDTO)));
             var assignDto = new AssignRoleToUserDTO
@@ -32,7 +32,7 @@ namespace HRSystem.Features.UserRole.UpdateUserRole.Commands
             };
             var assigned = await mediator.Send(new AssignRoleToUserCommand(assignDto));
 
-            return (!assigned.IsSuccess) ?
+            return !assigned.IsSuccess ?
                   RequestResult<UpdateUserRoleResponseVM>.Failure("Could not be assigned!") :
                   RequestResult<UpdateUserRoleResponseVM>.Success(mapper.Map<UpdateUserRoleResponseVM>(assigned));
         }

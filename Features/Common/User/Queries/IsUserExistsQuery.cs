@@ -18,7 +18,7 @@ namespace HRSystem.Features.Common.User.Queries
         public async override Task<RequestResult<bool>> Handle(IsUserExistsQuery request, CancellationToken cancellationToken)
         {
             var result = await _userRepository.AnyAsync(e=>e.Id==request.userId,cancellationToken);
-            return result ? RequestResult<bool>.Success(result) : RequestResult<bool>.Failure("User isnot Existed",ErrorCodes.NotFound);
+            return result ? RequestResult<bool>.Success(result) : RequestResult<bool>.Failure("User doest not Exist",ErrorCodes.NotFound);
         }
     }
 

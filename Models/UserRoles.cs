@@ -2,10 +2,10 @@
 {
     public class UserRole:BaseModel
     {
-        public User user { get; set; }
-        public Guid UserId { get; set; }
+        public virtual User user { get; set; }
+        public  Guid UserId { get; set; }
 
-        public Role Role { get; set; }
-        public Guid RoleId { get; set; }
+        public virtual Role Role { get; set; }
+        public  Guid RoleId { get; set; }
     }
 }

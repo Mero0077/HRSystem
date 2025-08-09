@@ -1,5 +1,6 @@
 ﻿using HRSystem.Common;
 using HRSystem.Common.Views;
+using HRSystem.Features.Auth.Jwt.interfaces;
 using HRSystem.Features.Organization.AddOrganization.Commands;
 using HRSystem.Features.Organization.AddOrganization.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,10 @@ namespace HRSystem.Features.Organization.AddOrganization
 {
     public class AddOrganizationEndPoint:BaseEndPoint<AddOrganizationRequestVM,AddOrganizationReponseVM>
     {
-        public AddOrganizationEndPoint(EndPointBaseParameters<AddOrganizationRequestVM> parameters):base(parameters) 
+        private IJwtGenerateHandler _jwtGenerateHandler;
+        public AddOrganizationEndPoint(IJwtGenerateHandler jwtGenerateHandler, EndPointBaseParameters<AddOrganizationRequestVM> parameters):base(parameters) 
         {
-            
+            _jwtGenerateHandler = jwtGenerateHandler;
         }
 
         [HttpPost]
@@ -20,6 +22,18 @@ namespace HRSystem.Features.Organization.AddOrganization
             return (res==null || res.Data==null || !res.IsSuccess)?
             EndPointResponse<AddOrganizationReponseVM>.Failure("Organization could not bed added!"):
             EndPointResponse<AddOrganizationReponseVM>.Success(res.Data, "Organization added!");
+        }
+
+        [HttpGet]
+        public string koko()
+        {
+            return "a7a";
+        }
+
+        [HttpGet("koky")]
+        public string koko2()
+        {
+           return _jwtGenerateHandler.GenerateToken("koko", new Guid(), new Guid());
         }
     }
 }
