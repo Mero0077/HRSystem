@@ -29,8 +29,6 @@ namespace HRSystem.Features.Feature.GetAllFeature.Endpoint
             var responseViewModel = mapper.Map<IEnumerable<GetAllFeaturesResponseViewModel>>(result.Data);
 
             return EndPointResponse<IEnumerable<GetAllFeaturesResponseViewModel>>.Success(responseViewModel);
-
-
         }
     }
 }
