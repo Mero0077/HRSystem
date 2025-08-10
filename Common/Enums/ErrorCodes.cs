@@ -5,6 +5,7 @@
         NoError = 0,
         NotFound=1,
         AlreadyExists=2,
-        AlreadyDeleted=3
+        AlreadyDeleted=3,
+        Null=4,
     }
 }
