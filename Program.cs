@@ -1,4 +1,5 @@
 
+using FluentValidation;
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
 
@@ -32,10 +33,6 @@ namespace HRSystem
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
 
-
-            builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-            builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
-
             var app = builder.Build();
 
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
@@ -48,7 +45,6 @@ namespace HRSystem
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddJwtAuthentication(builder.Configuration);
             
-                var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
