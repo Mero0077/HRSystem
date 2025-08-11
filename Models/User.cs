@@ -19,8 +19,9 @@
         public string Nationality { get; set; }
         public bool IsActive { get; set; }
 
-        public ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<UserRole> UserRole { get; set; }
 
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
 
     }
 }

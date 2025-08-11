@@ -19,6 +19,12 @@ namespace HRSystem.Common.AppDbContext
         public DbSet<Company> Companies { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<RoleFeature> RoleFeatures { get; set; }
 
     }
 }

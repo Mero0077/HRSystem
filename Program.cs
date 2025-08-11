@@ -1,6 +1,10 @@
 
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
+
+using HRSystem.Common.Middlewares;
+using HRSystem.Features.Auth.Jwt.Helper;
+using HRSystem.Features.Branch.Create_Branch;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Reflection;
@@ -11,6 +15,8 @@ namespace HRSystem
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("JWT KEY: " + Environment.GetEnvironmentVariable("JWT_SECRET_KEY"));
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -31,6 +37,17 @@ namespace HRSystem
 
             var app = builder.Build();
 
+            builder.Services.AddScoped<RequestHandlerBaseParameters>();
+            builder.Services.AddScoped<TransactionMiddleWare>();
+            builder.Services.AddScoped(typeof(EndPointBaseParameters<>));
+            builder.Services.AddValidatorsFromAssembly(typeof(CreateBranchRequestViewModelValidator).Assembly);
+            builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddJwtAuthentication(builder.Configuration);
+            
+                var app = builder.Build();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -40,6 +57,7 @@ namespace HRSystem
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseMiddleware<TransactionMiddleWare>();
 
 
             app.MapControllers();

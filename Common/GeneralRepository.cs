@@ -39,6 +39,12 @@ namespace HRSystem.Common
             return entity;
         }
 
+        public async Task<List<T>> AddAsyncRange(List<T> entities)
+        {
+             await _dbSet.AddRangeAsync(entities);
+            return entities;
+        }
+
         public async Task<T> UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
@@ -80,6 +86,29 @@ namespace HRSystem.Common
                 res.IsDeleted = true;
             }
             return res;
+        }
+
+        public async Task<bool> HardDeleteAsync(Guid Id)
+        {
+            var res = await GetOneByIdAsync(Id);
+
+            if (res == null || res.IsDeleted)
+            return false;
+
+            _dbSet.Remove(res);
+            var changes= await _context.SaveChangesAsync();
+
+            return changes==1;
+        }
+
+        public async Task<bool> DeleteAsyncMass(List<T> entities)
+        {
+            if (entities == null || !entities.Any())
+                return false;
+
+            _dbSet.RemoveRange(entities);
+            var changes = await _context.SaveChangesAsync();
+            return changes==entities.Count;
         }
 
         public async Task<bool> IsExists(Guid Id)

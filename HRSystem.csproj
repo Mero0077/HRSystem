@@ -24,6 +24,14 @@
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.7" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Auth\Refresh Token\Commands\" />
+    <Folder Include="Features\Organization\RemoveOrganization\Queries\" />
+    <Folder Include="Features\UserRole\DeleteUserRole\Queries\" />
+    <Folder Include="Features\UserRole\UpdateUserRole\Queries\" />
   </ItemGroup>
 
 </Project>

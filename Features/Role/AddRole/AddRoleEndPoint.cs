@@ -15,8 +15,11 @@ namespace HRSystem.Features.Role.AddRole
         [HttpPost]
         public async Task<EndPointResponse<AddRoleResponseVM>> AddRole([FromBody] AddRoleRequestVM request)
         {
-          var res= await mediator.Send(new AddRoleCommand(mapper.Map<AddRoleDTO>(request)));
-            return (!res.IsSuccess) ?
+            var validate = ValidateRequest(request);
+            if (!validate.IsSuccess) return validate;
+
+            var res= await mediator.Send(new AddRoleCommand(mapper.Map<AddRoleDTO>(request)));
+            return (res.IsSuccess) ?
                   EndPointResponse<AddRoleResponseVM>.Success(res.Data) :
                   EndPointResponse<AddRoleResponseVM>.Failure("Could not add Role!");
 
