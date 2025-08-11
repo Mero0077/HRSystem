@@ -11,7 +11,7 @@ namespace HRSystem.Features.RoleFeature.CheckRoleFeature.Queries
 
         public CheckRoleFeatureQueryHandler(IGeneralRepository<Models.RoleFeature> roleFeatureRepository,RequestHandlerBaseParameters parameters) : base(parameters)
         {
-            this._roleFeatureRepository = roleFeatureRepository;
+            _roleFeatureRepository = roleFeatureRepository;
         }
 
         public async override Task<RequestResult<bool>> Handle(CheckRoleFeatureQuery request, CancellationToken cancellationToken)

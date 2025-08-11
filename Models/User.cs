@@ -11,13 +11,13 @@
 
         public string LastName { get; set; }
         public string Phone {  get; set; }
-        public string NationalityId { get; set; }
+        public string? NationalityId { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
-        public string Address { get; set; }
-        public string EmrgencyContact { get; set; }
-        public string Nationality { get; set; }
-        public bool IsActive { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string? Address { get; set; }
+        public string? EmrgencyContact { get; set; }
+        public string? Nationality { get; set; }
+        public bool IsActive { get; set; } = false;
 
         public virtual ICollection<UserRole> UserRole { get; set; }
 

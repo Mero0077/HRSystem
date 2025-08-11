@@ -1,7 +1,9 @@
 ﻿using HRSystem.Common;
 using HRSystem.Common.Views;
+using HRSystem.Features.Common.RoleFeature.Filters.Auth;
 using HRSystem.Features.Role.AddRole.Commands;
 using HRSystem.Features.Role.AddRole.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRSystem.Features.Role.AddRole
@@ -13,6 +15,8 @@ namespace HRSystem.Features.Role.AddRole
         }
 
         [HttpPost]
+        [Authorize]
+        [ServiceFilter(typeof(CustomAuthorizedFilter))]
         public async Task<EndPointResponse<AddRoleResponseVM>> AddRole([FromBody] AddRoleRequestVM request)
         {
             var validate = ValidateRequest(request);

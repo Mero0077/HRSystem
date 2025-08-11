@@ -4,6 +4,7 @@ using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
 using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Branch.Create_Branch;
+using HRSystem.Features.Common.RoleFeature.Filters.Auth;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Diagnostics;
@@ -32,6 +33,7 @@ namespace HRSystem
             builder.Services.AddOpenApi();
 
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
+            builder.Services.AddScoped<CustomAuthorizedFilter>();
             builder.Services.AddScoped(typeof(EndPointBaseParameters<>));
             builder.Services.AddValidatorsFromAssembly(typeof(CreateBranchRequestViewModelValidator).Assembly);
             builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

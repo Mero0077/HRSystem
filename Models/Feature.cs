@@ -8,5 +8,7 @@
         public int DisplayOrder { get; set; }
         public bool IsActive { get; set; }
 
+        public virtual ICollection<EndPointFeature> endPointFeature { get; set; }
+
     }
 }
