@@ -1,12 +1,11 @@
 
-using FluentValidation;
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
+
 using HRSystem.Common.Middlewares;
 using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Branch.Create_Branch;
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -21,7 +20,7 @@ namespace HRSystem
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
                .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
                .EnableSensitiveDataLogging(true)
                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
@@ -31,6 +30,12 @@ namespace HRSystem
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
+
+
+            builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
+
+            var app = builder.Build();
 
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
             builder.Services.AddScoped<TransactionMiddleWare>();
@@ -46,7 +51,6 @@ namespace HRSystem
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapScalarApiReference();
                 app.MapOpenApi();
             }
 
