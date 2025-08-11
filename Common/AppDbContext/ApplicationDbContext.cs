@@ -13,6 +13,7 @@ namespace HRSystem.Common.AppDbContext
             {
                 optionsBuilder.UseSqlServer("Server=.;Database=HRMS;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True");
             }
+          
         }
 
         public DbSet<Organization> Organizations { get; set; }

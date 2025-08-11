@@ -8,6 +8,7 @@ using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Branch.Create_Branch;
 using HRSystem.Features.Common.RoleFeature.Filters.Auth;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -33,7 +34,7 @@ namespace HRSystem
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
 
-            var app = builder.Build();
+         
 
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
             builder.Services.AddScoped<TransactionMiddleWare>();
@@ -44,11 +45,12 @@ namespace HRSystem
             builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddJwtAuthentication(builder.Configuration);
-            
 
+            var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.MapScalarApiReference();
                 app.MapOpenApi();
             }
 
