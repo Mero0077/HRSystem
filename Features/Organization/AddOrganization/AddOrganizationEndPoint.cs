@@ -23,17 +23,6 @@ namespace HRSystem.Features.Organization.AddOrganization
             EndPointResponse<AddOrganizationReponseVM>.Failure("Organization could not bed added!"):
             EndPointResponse<AddOrganizationReponseVM>.Success(res.Data, "Organization added!");
         }
-
-        [HttpGet]
-        public string koko()
-        {
-            return "a7a";
-        }
-
-        [HttpGet("koky")]
-        public string koko2()
-        {
-           return _jwtGenerateHandler.GenerateToken("koko", new Guid(), new Guid());
-        }
+        
     }
 }
