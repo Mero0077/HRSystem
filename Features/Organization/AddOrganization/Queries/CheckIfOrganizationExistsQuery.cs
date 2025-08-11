@@ -1,10 +1,12 @@
 ﻿using HRSystem.Common;
 using HRSystem.Common.Views;
 using MediatR;
+using System.Globalization;
 
 namespace HRSystem.Features.Organization.AddOrganization.Queries
 {
-    public record CheckIfOrganizationExistsQuery(string Name):IRequest<RequestResult<bool>>;
+
+    public record CheckIfOrganizationExistsQuery(String Name):IRequest<RequestResult<bool>>;
     public class CheckIfOrganizationExistsQueryHandler : RequestHandlerBase<CheckIfOrganizationExistsQuery, bool>
     {
         private IGeneralRepository<HRSystem.Models.Organization> _OrganizationRepository;
@@ -15,8 +17,8 @@ namespace HRSystem.Features.Organization.AddOrganization.Queries
 
         public override async Task<RequestResult<bool>> Handle(CheckIfOrganizationExistsQuery request, CancellationToken cancellationToken)
         {
-           var res= await _OrganizationRepository.GetOneWithTrackingAsync(e=>e.Name==request.Name);
-           return res != null ? RequestResult<bool>.Success(true) : RequestResult<bool>.Failure("Orga not exist!");
+            var exists = await _OrganizationRepository.GetOneWithTrackingAsync(e=>e.Name== request.Name);
+            return exists!=null? RequestResult<bool>.Success(true): RequestResult<bool>.Failure("not found") ;
         }
     }
 }

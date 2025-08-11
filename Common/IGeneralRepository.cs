@@ -22,7 +22,7 @@ namespace HRSystem.Common
 
             public Task<bool> IsExists(Guid Id);
 
-            public Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default);
+            public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
             public Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
 
