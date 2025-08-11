@@ -34,8 +34,8 @@ namespace HRSystem
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
-
-
+          
+          
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
             builder.Services.AddScoped<TransactionMiddleWare>();
             builder.Services.AddScoped<CustomAuthorizedFilter>();
@@ -46,8 +46,8 @@ namespace HRSystem
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
-            var app = builder.Build();
 
+            var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
