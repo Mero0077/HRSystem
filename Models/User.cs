@@ -21,6 +21,7 @@
 
         public virtual ICollection<UserRole> UserRole { get; set; }
 
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
 
     }
 }

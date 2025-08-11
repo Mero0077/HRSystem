@@ -8,7 +8,6 @@ namespace HRSystem.Common.Views
         {
             return new EndPointResponse<T>(Data,true,Message,ErrorCodes.NoError);
         }
-     
         public static EndPointResponse<T> Failure(string message, ErrorCodes errorCode = ErrorCodes.NoError)
         {
             return new EndPointResponse<T>(default, false, message, errorCode);

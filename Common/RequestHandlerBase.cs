@@ -1,4 +1,3 @@
-
 ﻿using AutoMapper;
 using Azure;
 using HRSystem.Common.Views;
