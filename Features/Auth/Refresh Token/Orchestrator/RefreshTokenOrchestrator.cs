@@ -50,7 +50,8 @@ namespace HRSystem.Features.Auth.Refresh_Token.Commands
             storedToken.Data.RevokedReason = "Replaced by rotation";
 
            await _refreshTokenRepository.AddAsync(newRefreshToken);
-           var newAccessToken = _jwtGenerateHandler.GenerateToken(user.Data.UserName,user.Data.Id,user.Data.RoleIds.FirstOrDefault()); // list ramy
+           var newAccessToken = _jwtGenerateHandler.GenerateToken(user.Data.UserName,user.Data.Id,user.Data.RoleIds.ToList());
+
            await _refreshTokenRepository.SaveChangesAsync();
 
             RefreshTokenResponseDTO responseDTO = new RefreshTokenResponseDTO()
