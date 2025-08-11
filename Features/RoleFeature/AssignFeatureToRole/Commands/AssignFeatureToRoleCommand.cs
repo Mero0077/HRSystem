@@ -1,7 +1,9 @@
 ﻿using HRSystem.Common;
+using HRSystem.Common.Enums;
 using HRSystem.Common.Views;
 using HRSystem.Features.Common.Feature.Queries;
 using HRSystem.Features.Common.Role.Queries;
+using HRSystem.Features.Common.RoleFeature.Queries;
 using HRSystem.Features.RoleFeature.AssignFeatureToRole.DTOs;
 using MediatR;
 
@@ -27,6 +29,10 @@ namespace HRSystem.Features.RoleFeature.AssignFeatureToRole.Commands
             var featureResult = await mediator.Send(new IsFeatureExistsQuery(request.AssignFeatureToRoleRequestDTO.FeatureId));
             if(!featureResult.IsSuccess)
                 return featureResult;
+
+            var featureRoleCheck = await mediator.Send(new CheckFeatureRoleByIdsQuery(request.AssignFeatureToRoleRequestDTO.FeatureId, request.AssignFeatureToRoleRequestDTO.RoleId));
+            if (featureRoleCheck.Data)
+                return RequestResult<bool>.Failure("The role is already assigned to feature", ErrorCodes.NotFound);
 
             var roleFeatureMapped = mapper.Map<Models.RoleFeature>(request.AssignFeatureToRoleRequestDTO);
             await _roleFeatureRepository.AddAsync(roleFeatureMapped);

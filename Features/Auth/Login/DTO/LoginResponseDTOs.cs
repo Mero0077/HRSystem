@@ -1,6 +1,6 @@
-﻿namespace HRSystem.Features.Auth.Login
+﻿namespace HRSystem.Features.Auth.Login.DTO
 {
-    public class LoginResponseVM
+    public class LoginResponseDTOs
     {
         public string AccessToken { get; set; }
         public DateTime AccessTokenExpiresOn { get; set; }

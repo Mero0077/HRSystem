@@ -16,6 +16,9 @@
 
         public static double JwtExpiredRefreshTokenDays = 7;
         public static double JwtExpiredAcessTokenHours = 2;
+        public static string PasswordNotEmptyLogin = "The Password Field Shouldn't be Empty";
+
+        public static string UserNameNotEmptyLogin = "The UserName Field Shouldn't be Empty";
         public static string BranchLocationMaximumLengthValidator => "Location cannot exceed 100 characters.";
     }
 }

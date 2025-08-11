@@ -12,7 +12,7 @@ namespace HRSystem.Common
     public class BaseEndPoint<TRequest, TResult> : ControllerBase
     {
         protected IMediator mediator;
-        protected IValidator<TRequest> validator;
+        protected IValidator<TRequest>? validator;
         protected IMapper mapper;
         public BaseEndPoint(EndPointBaseParameters<TRequest> parameters)
         {
@@ -24,6 +24,8 @@ namespace HRSystem.Common
         protected EndPointResponse<TResult> ValidateRequest(TRequest request)
 
         {
+            if (validator == null)
+                return EndPointResponse<TResult>.Success(default, "No validation rules");
             var validateResult = validator.Validate(request);
             if(!validateResult.IsValid)
             {

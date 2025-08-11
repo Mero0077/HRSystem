@@ -39,11 +39,11 @@ namespace HRSystem.Features.RoleFeature.AssignListFeaturesToRoleCommandHandler.C
                 });
             }
             if (newRoleFeatureList.Any())
+            {
                 await _roleFeatureRepository.AddAsyncRange(newRoleFeatureList);
-
+                await _roleFeatureRepository.SaveChangesAsync();
+            }
             return RequestResult<bool>.Success(true);
-
-
         }
     }
 }

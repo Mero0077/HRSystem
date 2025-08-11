@@ -1,4 +1,4 @@
-﻿namespace HRSystem.Features.Common.User.DTOs
+﻿namespace HRSystem.Features.Common.User.GetUserById.DTOs
 {
     public class GetUserByIdResponseDTO
     {

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using HRSystem.Features.Common.User.GetUser;
 
-namespace HRSystem.Features.Common.User.MappingProfile
+namespace HRSystem.Features.Common.User.GetUser.MappingProfile
 {
     public class GetUserProfile:Profile
     {
         public GetUserProfile()
         {
-            CreateMap<HRSystem.Models.User, GetUserResposneVM>();
+            CreateMap<Models.User, GetUserResposneVM>();
         }
     }
 }
