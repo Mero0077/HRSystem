@@ -37,7 +37,7 @@ namespace HRSystem.Features.Auth.Login.Orchestrator
             if (user.Data == null)
                 return RequestResult<LoginResponseDTOs>.Failure("Invalid Username or Pass!", ErrorCodes.NotFound);
 
-            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.Id, user.Data.RoleIds.FirstOrDefault());
+            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.Id, user.Data.RoleIds.ToList());
 
             var refreshToken = new RefreshToken()
             {

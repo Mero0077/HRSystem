@@ -29,7 +29,7 @@ namespace HRSystem.Features.Auth.Login.Command
             var user = await mediator.Send(new GetUserWithTheirRoles(request.LoginDTO));
             if (user == null) return RequestResult<string>.Failure("Invalid Username or Pass!");
 
-            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.UserId, user.Data.RoleIds.FirstOrDefault());
+            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.UserId, user.Data.RoleIds.ToList());
             return RequestResult<string>.Success(token);
 
         }
