@@ -16,7 +16,7 @@ namespace HRSystem.Features.Auth.Jwt
         {
             this.options = options.Value;
         }
-        string IJwtGenerateHandler.GenerateToken(string userName, Guid userId, Guid roleId)
+        string IJwtGenerateHandler.GenerateToken(string userName, Guid userId, List<Guid> roleIds)
         {
             var encodedSecretKey = JwtHelper.GetSymmetricSecurityKey();
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -26,10 +26,10 @@ namespace HRSystem.Features.Auth.Jwt
               new Claim(ClaimTypes.Name,userName),
           };
 
-            //foreach(var roleId in roleIds)
-            //{
+            foreach (var roleId in roleIds)
+            {
                 claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
-            
+            }
 
             var creds = new SigningCredentials(encodedSecretKey, SecurityAlgorithms.HmacSha256);
 
