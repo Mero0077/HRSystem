@@ -2,6 +2,6 @@
 {
     public interface IJwtGenerateHandler
     {
-        public string GenerateToken(string userName,Guid userId,List<Guid> roleIds);
+        public string GenerateToken(string userName,Guid userId,Guid roleId);
     }
 }
