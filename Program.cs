@@ -2,6 +2,7 @@
 using FluentValidation;
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
+using HRSystem.Common.Middlewares;
 using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Branch.Create_Branch;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ namespace HRSystem
             builder.Services.AddOpenApi();
 
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
+            builder.Services.AddScoped<TransactionMiddleWare>();
             builder.Services.AddScoped(typeof(EndPointBaseParameters<>));
             builder.Services.AddValidatorsFromAssembly(typeof(CreateBranchRequestViewModelValidator).Assembly);
             builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
@@ -51,6 +53,7 @@ namespace HRSystem
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseMiddleware<TransactionMiddleWare>();
 
 
             app.MapControllers();

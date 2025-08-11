@@ -1,4 +1,5 @@
-﻿using HRSystem.Features.Auth.Jwt.Helper;
+﻿using HRSystem.Common.Constants;
+using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Auth.Jwt.interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +16,7 @@ namespace HRSystem.Features.Auth.Jwt
         {
             this.options = options.Value;
         }
-        string IJwtGenerateHandler.GenerateToken(string userName, Guid userId, Guid roleId)
+        string IJwtGenerateHandler.GenerateToken(string userName, Guid userId, List<Guid> roleIds)
         {
             var encodedSecretKey = JwtHelper.GetSymmetricSecurityKey();
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -23,8 +24,12 @@ namespace HRSystem.Features.Auth.Jwt
           {
               new Claim(ClaimTypes.NameIdentifier,userId.ToString()),
               new Claim(ClaimTypes.Name,userName),
-              new Claim(ClaimTypes.Role,roleId.ToString()),
           };
+
+            foreach(var roleId in roleIds)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
+            }
 
             var creds = new SigningCredentials(encodedSecretKey, SecurityAlgorithms.HmacSha256);
 
@@ -33,7 +38,7 @@ namespace HRSystem.Features.Auth.Jwt
                 Issuer = options.Issuer,
                 Audience = options.Audience,
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddHours(Constants.JwtExpiredAcessTokenHours),
                 NotBefore = DateTime.UtcNow,
                 SigningCredentials = creds
             };
