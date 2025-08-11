@@ -7,6 +7,7 @@
         AlreadyExists=2,
         AlreadyDeleted=3,
         Null=4,
-        UnAuthorized=5
+        UnAuthorized=5,
+        UnAuthenticated=6
     }
 }

@@ -24,7 +24,7 @@ namespace HRSystem.Features.Feature.GetAllFeature.Endpoint
 
 
             if (!result.Data.Any())
-                return EndPointResponse<IEnumerable<GetAllFeaturesResponseViewModel>>.Failure(ErrorCodes.NotFound);
+                return EndPointResponse<IEnumerable<GetAllFeaturesResponseViewModel>>.Failure("The feature list is empty",ErrorCodes.NotFound);
 
             var responseViewModel = mapper.Map<IEnumerable<GetAllFeaturesResponseViewModel>>(result.Data);
 

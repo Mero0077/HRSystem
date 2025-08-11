@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public string TimeZone { get; set; }
 
-        public Company Company { get; set; }
+        public virtual Company Company { get; set; }
         public Guid CompanyId { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
     }

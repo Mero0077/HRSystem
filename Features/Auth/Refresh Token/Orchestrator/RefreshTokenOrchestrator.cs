@@ -6,6 +6,7 @@ using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Auth.Jwt.interfaces;
 using HRSystem.Features.Auth.Refresh_Token.DTOs;
 using HRSystem.Features.Auth.Refresh_Token.Queries;
+using HRSystem.Features.Common.User.GetUserById;
 using HRSystem.Features.Common.User.Queries;
 using HRSystem.Models;
 using MediatR;
@@ -39,7 +40,7 @@ namespace HRSystem.Features.Auth.Refresh_Token.Commands
                 return RequestResult<RefreshTokenResponseDTO>.Failure("Invalid refresh token.",ErrorCodes.UnAuthorized);
             }
 
-            var user = await mediator.Send(new GetUserByIdQuery(storedToken.Data.UserId));
+            var user = await mediator.Send(new GetUserByIdQuery(storedToken.Data.User.UserName));
             if (user.Data == null)
                 return RequestResult<RefreshTokenResponseDTO>.Failure("User is not found",ErrorCodes.NotFound);
 
@@ -49,7 +50,7 @@ namespace HRSystem.Features.Auth.Refresh_Token.Commands
             storedToken.Data.RevokedReason = "Replaced by rotation";
 
            await _refreshTokenRepository.AddAsync(newRefreshToken);
-           var newAccessToken = _jwtGenerateHandler.GenerateToken(user.Data.UserName,user.Data.Id,user.Data.RoleIds.FirstOrDefault()); // list ramy
+           var newAccessToken = _jwtGenerateHandler.GenerateToken(user.Data.UserName,user.Data.Id,user.Data.RoleIds.ToList()); // list ramy
            await _refreshTokenRepository.SaveChangesAsync();
 
             RefreshTokenResponseDTO responseDTO = new RefreshTokenResponseDTO()

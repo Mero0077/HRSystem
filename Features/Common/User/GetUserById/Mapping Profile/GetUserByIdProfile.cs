@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HRSystem.Features.Branch.Create_Branch.Command;
-using HRSystem.Features.Common.User.DTOs;
+using HRSystem.Features.Common.User.GetUserById.DTOs;
 
 namespace HRSystem.Features.Common.User.Mapping_Profile
 {

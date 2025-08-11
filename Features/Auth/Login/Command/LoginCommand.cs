@@ -1,8 +1,10 @@
 ﻿using HRSystem.Common;
+using HRSystem.Common.Enums;
 using HRSystem.Common.Views;
 using HRSystem.Features.Auth.Jwt.interfaces;
 using HRSystem.Features.Auth.Login.DTO;
 using HRSystem.Features.Common.User.GetUser;
+using HRSystem.Features.Common.User.GetUserById;
 using HRSystem.Features.Common.User.Queries;
 using HRSystem.Features.UserRole.GetUserRole.Query;
 using HRSystem.Models;
@@ -24,12 +26,19 @@ namespace HRSystem.Features.Auth.Login.Command
         public async override Task<RequestResult<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var res = await mediator.Send(new CheckIfUserNameAndPasswordMatchesQuery(request.LoginDTO));
-            if (res == null) return RequestResult<string>.Failure("Invalid Username or Pass!");
+            if (res == null) return RequestResult<string>.Failure("Invalid Username or Pass!",ErrorCodes.UnAuthenticated);
 
-            var user = await mediator.Send(new GetUserQuery(request.LoginDTO));
+            var user = await mediator.Send(new GetUserByIdQuery(request.LoginDTO.UserName));
+            if(user.Data == null)
+                return RequestResult<string>.Failure("Invalid Username or Pass!", ErrorCodes.NotFound);
 
-            var roleId = await mediator.Send(new GetUserRoleQuery(user.Data.Id));
-            string token= _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.Id, roleId.Data);
+            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.Id, user.Data.RoleIds.ToList());
+
+            var refreshToken = new RefreshToken()
+            {
+                Id = Guid.NewGuid()
+            };
+
             return RequestResult<string>.Success(token);
         }
     }

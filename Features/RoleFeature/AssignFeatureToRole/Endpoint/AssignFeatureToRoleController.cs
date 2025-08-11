@@ -21,7 +21,7 @@ namespace HRSystem.Features.RoleFeature.AssignFeatureToRole.Endpoint
         {
             var requestDTO = mapper.Map<AssignFeatureToRoleRequestDTO>(assignFeatureToRoleRequestViewModel);
             var result = await mediator.Send(new AssignFeatureToRoleCommand(requestDTO));
-            return result.IsSuccess ? EndPointResponse<bool>.Success(true) : EndPointResponse<bool>.Failure(result.ErrorCodes);
+            return result.IsSuccess ? EndPointResponse<bool>.Success(result.Data) : EndPointResponse<bool>.Failure(result.Message,result.ErrorCodes);
         }
     }
 }
