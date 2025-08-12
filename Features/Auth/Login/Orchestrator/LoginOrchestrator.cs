@@ -6,6 +6,7 @@ using HRSystem.Features.Auth.Jwt.interfaces;
 using HRSystem.Features.Auth.Login.DTO;
 using HRSystem.Features.Common.User.GetUserById;
 using HRSystem.Features.Common.User.Queries;
+using HRSystem.Features.Common.UserRole.Queries;
 using HRSystem.Models;
 using MediatR;
 using System.Security.Cryptography;
@@ -29,15 +30,18 @@ namespace HRSystem.Features.Auth.Login.Orchestrator
 
         public override async Task<RequestResult<LoginResponseDTOs>> Handle(LoginOrchestrator request, CancellationToken cancellationToken)
         {
-            var res = await mediator.Send(new CheckIfUserNameAndPasswordMatchesQuery(request.LoginDTO));
+            var user = await mediator.Send(new GetUserWithTheirRoles(request.LoginDTO));
+            if (user == null) return RequestResult<LoginResponseDTOs>.Failure("Invalid Username or Pass!");
 
-            if (res == null) return RequestResult<LoginResponseDTOs>.Failure("Invalid Username or Pass!", ErrorCodes.UnAuthenticated);
+            //var res = await mediator.Send(new CheckIfUserNameAndPasswordMatchesQuery(request.LoginDTO));
 
-            var user = await mediator.Send(new GetUserByIdQuery(request.LoginDTO.UserName));
-            if (user.Data == null)
-                return RequestResult<LoginResponseDTOs>.Failure("Invalid Username or Pass!", ErrorCodes.NotFound);
+            //if (res == null) return RequestResult<LoginResponseDTOs>.Failure("Invalid Username or Pass!", ErrorCodes.UnAuthenticated);
 
-            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.Id, user.Data.RoleIds.ToList());
+            //var user = await mediator.Send(new GetUserByIdQuery(request.LoginDTO.UserName));
+            //if (user.Data == null)
+            //    return RequestResult<LoginResponseDTOs>.Failure("Invalid Username or Pass!", ErrorCodes.NotFound);
+
+            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.UserId, user.Data.RoleIds.ToList());
 
             var refreshToken = new RefreshToken()
             {
@@ -45,7 +49,7 @@ namespace HRSystem.Features.Auth.Login.Orchestrator
                 Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
                 ExpiresOn = DateTime.UtcNow.AddDays(Constants.JwtExpiredRefreshTokenDays),
                 CreatedDate = DateTime.UtcNow,
-                UserId = user.Data.Id,
+                UserId = user.Data.UserId,
             };
             await _refreshRepository.AddAsync(refreshToken);
             await _refreshRepository.SaveChangesAsync();    

@@ -22,9 +22,29 @@ namespace HRSystem.Features.Auth.Login
 
             var res = await mediator.Send(new LoginOrchestrator(mapper.Map<LoginDTO>(request)));
 
-            return res.IsSuccess ?
-                        EndPointResponse<LoginResponseVM>.Success(mapper.Map<LoginResponseVM>(res.Data)) :
-                        EndPointResponse<LoginResponseVM>.Failure(res.Message,res.ErrorCodes);
+            if (!res.IsSuccess)
+                return EndPointResponse<LoginResponseVM>.Failure(res.Message, res.ErrorCodes);
+
+            var responseVM = mapper.Map<LoginResponseVM>(res.Data);
+
+            //  HttpOnly Secure Cookie
+            Response.Cookies.Append(
+                "refreshToken",                  
+                responseVM.RefreshToken,          
+                new CookieOptions
+                {
+                    HttpOnly = true,              
+                    Secure = true,                
+                    SameSite = SameSiteMode.Strict,
+                    Expires = responseVM.RefreshTokenExpiresOn
+                }
+            );
+
+            return EndPointResponse<LoginResponseVM>.Success(new LoginResponseVM
+            {
+                AccessToken = responseVM.AccessToken,
+                AccessTokenExpiresOn = responseVM.AccessTokenExpiresOn
+            });
         }
     }
 }

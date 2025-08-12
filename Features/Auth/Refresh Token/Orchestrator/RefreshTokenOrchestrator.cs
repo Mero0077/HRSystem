@@ -44,7 +44,7 @@ namespace HRSystem.Features.Auth.Refresh_Token.Commands
             if (user.Data == null)
                 return RequestResult<RefreshTokenResponseDTO>.Failure("User is not found",ErrorCodes.NotFound);
 
-            var newRefreshToken = CreateRefreshToken(user.Data.Id);
+            var newRefreshToken = CreateRefreshToken(user.Data.Id); // refresh token should be hashed
             storedToken.Data.RevokedOn = DateTime.UtcNow;
             storedToken.Data.ReplacedByToken = newRefreshToken.Token;
             storedToken.Data.RevokedReason = "Replaced by rotation";

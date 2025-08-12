@@ -28,5 +28,6 @@ namespace HRSystem.Common.AppDbContext
         public DbSet<RoleFeature> RoleFeatures { get; set; }
         public DbSet<HRSystem.Models.EndPointAction> EndpointActions { get; set; }
         public DbSet<EndPointFeature> EndPointFeatures { get; set; }
+        public DbSet<UserFeature> UserFeatures { get; set; }
     }
 }
