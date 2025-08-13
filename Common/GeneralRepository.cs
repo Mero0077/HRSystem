@@ -118,7 +118,6 @@ namespace HRSystem.Common
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            await _context.SaveChangesAsync(cancellationToken);
             return await _context.SaveChangesAsync(cancellationToken);
         }
 
