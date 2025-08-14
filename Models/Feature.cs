@@ -10,6 +10,7 @@
 
         public virtual ICollection<EndPointFeature> endPointFeature { get; set; }
         public virtual ICollection<UserFeature> UserFeatures { get; set; }
+        public virtual ICollection<UserScope> UserScopes { get; set; }
 
 
     }

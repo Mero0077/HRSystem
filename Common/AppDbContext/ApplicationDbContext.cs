@@ -30,5 +30,6 @@ namespace HRSystem.Common.AppDbContext
         public DbSet<EndPointFeature> EndPointFeatures { get; set; }
         public DbSet<UserFeature> UserFeatures { get; set; }
         public DbSet<FeatureScope> FeatureScopes { get; set; }
+        public DbSet<UserScope> UserScopes { get; set; }    
     }
 }
