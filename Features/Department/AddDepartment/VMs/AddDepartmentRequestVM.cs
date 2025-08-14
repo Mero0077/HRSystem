@@ -1,0 +1,13 @@
+﻿using FluentValidation;
+
+namespace HRSystem.Features.Department.AddDepartment.VMs
+{
+    public record AddDepartmentRequestVM(Guid Name,Guid NumOfEmployees,Guid ManagerId,string Description,Guid BranchId);
+    public class AddDepartmentRequestVMValidator:AbstractValidator<AddDepartmentRequestVM>
+    {
+        public AddDepartmentRequestVMValidator()
+        {
+            
+        }
+    }
+}
