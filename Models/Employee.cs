@@ -1,11 +1,13 @@
 ﻿namespace HRSystem.Models
 {
-    public class Employee : User
+    public class Employee : BaseModel
     {
         public string EmployeeCode { get; set; }
         public string JobTitle { get; set; }
         public DateTime JoiningDate { get; set; }
         public Guid DepartmentId { get; set; }
+        public Guid? UserId { get; set; }
+        public virtual User User { get; set; }
         public virtual Department Department { get; set; }
     }
 }

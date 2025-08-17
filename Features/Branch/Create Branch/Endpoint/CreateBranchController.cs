@@ -1,4 +1,5 @@
 ﻿using HRSystem.Common;
+using HRSystem.Common.MessageBroker;
 using HRSystem.Common.Views;
 using HRSystem.Features.Branch.Create_Branch.Command;
 using HRSystem.Features.Branch.Create_Branch.DTOS;
@@ -11,8 +12,11 @@ namespace HRSystem.Features.Branch.Create_Branch.Endpoint
     [ApiController]
     public class CreateBranchController : BaseEndPoint<CreateBranchRequestViewModel, CreateBranchResponseViewModel>
     {
-        public CreateBranchController(EndPointBaseParameters<CreateBranchRequestViewModel> parameters) : base(parameters)
+        private readonly RabbitMqPublisher rabbitMqPublisher;
+
+        public CreateBranchController(EndPointBaseParameters<CreateBranchRequestViewModel> parameters,RabbitMqPublisher rabbitMqPublisher) : base(parameters)
         {
+            this.rabbitMqPublisher = rabbitMqPublisher;
         }
 
         [HttpPost]
@@ -35,6 +39,13 @@ namespace HRSystem.Features.Branch.Create_Branch.Endpoint
 
             return EndPointResponse<CreateBranchResponseViewModel>.Success(responseViewModel);
           
+        }
+
+        [HttpPost]
+        public async Task<string> Publish(string message)
+        {
+          await  rabbitMqPublisher.PublishMessage(message);
+            return message;
         }
     }
 }

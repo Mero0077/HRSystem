@@ -18,6 +18,7 @@
         public string? EmrgencyContact { get; set; }
         public string? Nationality { get; set; }
         public bool IsActive { get; set; } = false;
+        public string TimeZone {  get; set; }
 
         public virtual ICollection<UserRole> UserRole { get; set; }
 

@@ -31,5 +31,6 @@ namespace HRSystem.Common.AppDbContext
         public DbSet<UserFeature> UserFeatures { get; set; }
         public DbSet<FeatureScope> FeatureScopes { get; set; }
         public DbSet<UserScope> UserScopes { get; set; }    
+        public DbSet<Attendance> Attendances { get; set; }
     }
 }

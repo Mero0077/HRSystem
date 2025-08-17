@@ -2,8 +2,9 @@
 using FluentValidation;
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
-
+using HRSystem.Common.MessageBroker;
 using HRSystem.Common.Middlewares;
+using HRSystem.Features.Attendance.CheckIn.CheckInFilterInterceptor;
 using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Branch.Create_Branch;
 using HRSystem.Features.Common.RoleFeature.Filters.Auth;
@@ -39,12 +40,14 @@ namespace HRSystem
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
             builder.Services.AddScoped<TransactionMiddleWare>();
             builder.Services.AddScoped<CustomAuthorizedFilter>();
+            builder.Services.AddScoped<TimeZoneFilter>();
             builder.Services.AddScoped(typeof(EndPointBaseParameters<>));
             builder.Services.AddValidatorsFromAssembly(typeof(CreateBranchRequestViewModelValidator).Assembly);
             builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddJwtAuthentication(builder.Configuration);
+            builder.Services.AddSingleton<RabbitMqPublisher>();
 
 
             var app = builder.Build();
