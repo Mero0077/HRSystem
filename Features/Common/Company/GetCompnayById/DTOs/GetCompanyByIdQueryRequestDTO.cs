@@ -1,0 +1,8 @@
+﻿namespace HRSystem.Features.Common.Company.GetCompnayByIdQuery.DTOs
+{
+    public class GetCompanyByIdQueryRequestDTO
+    {
+        public Guid? OrganizationId { get; set; } = null;
+        public Guid CompanyId { get; set; }
+    }
+}

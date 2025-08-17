@@ -25,6 +25,7 @@ namespace HRSystem.Common.AppDbContext
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Feature> Features { get; set; }
+        public DbSet<RoleScope> RoleScopes { get; set; }
         public DbSet<RoleFeature> RoleFeatures { get; set; }
         public DbSet<HRSystem.Models.EndPointAction> EndpointActions { get; set; }
         public DbSet<EndPointFeature> EndPointFeatures { get; set; }
