@@ -9,7 +9,7 @@ namespace HRSystem.Common
     public class GeneralRepository<T>:IGeneralRepository<T> where T:BaseModel
     {
         private DbSet<T> _dbSet;
-        private readonly ApplicationDbContext _context;
+        protected readonly ApplicationDbContext _context;
 
         public GeneralRepository(ApplicationDbContext context)
         {

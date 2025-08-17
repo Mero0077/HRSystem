@@ -31,7 +31,6 @@
   <ItemGroup>
     <Folder Include="Features\Feature\" />
     <Folder Include="Features\Auth\Refresh Token\Commands\" />
-    <Folder Include="Features\Organization\RemoveOrganization\Queries\" />
     <Folder Include="Features\UserFeature\AssignFeatureToUser\Queries\" />
     <Folder Include="Features\UserRole\DeleteUserRole\Queries\" />
     <Folder Include="Features\UserRole\UpdateUserRole\Queries\" />
