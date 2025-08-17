@@ -1,12 +1,11 @@
-﻿namespace HRSystem.Models
+﻿namespace HRSystem.Features.Department.AddDepartment.DTOs
 {
-    public class Department:BaseModel
+    public class AddDepartmentRequestDTO
     {
         public string Name { get; set; }
         public int NumOfEmployees { get; set; }
-        public string Description { get; set; }
         public Guid? ManagerId { get; set; }
-        public virtual Branch Branch { get; set; }
+        public string? Description { get; set; }
         public virtual Guid BranchId { get; set; }
     }
 }
