@@ -41,7 +41,7 @@ namespace HRSystem.Features.Attendance.CheckIn.CheckInFilterInterceptor
             }
 
 
-            var windowsId = TZConvert.IanaToWindows(TimeZone);
+            var windowsId = TZConvert.IanaToWindows(TimeZone); // redo
             var info = TimeZoneInfo.FindSystemTimeZoneById(windowsId);
 
             if (req.CheckInTime.HasValue)

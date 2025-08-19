@@ -47,5 +47,17 @@ namespace HRSystem.Features.Branch.Create_Branch.Endpoint
           await  rabbitMqPublisher.PublishMessage(message);
             return message;
         }
+
+        [HttpPost]
+        public async Task<EndPointResponse<string>> AddBr([FromBody] CreateBranchRequestViewModel request)
+        {
+            //add br
+
+            var message = Newtonsoft.Json.JsonConvert.SerializeObject(request);
+          await  rabbitMqPublisher.PublishMessage(message);
+
+            return EndPointResponse<string>.Failure("s");
+
+        }
     }
 }

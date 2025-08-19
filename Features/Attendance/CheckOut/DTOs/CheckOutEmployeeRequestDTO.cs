@@ -1,6 +1,7 @@
 ﻿namespace HRSystem.Features.Attendance.CheckOut.DTOs
 {
-    public class CheckOutEmployeeRequestDTO
+    public record CheckOutEmployeeRequestDTO(Guid EmpId, DateTimeOffset? CheckOutTime);
+    public class CheckOutEmployeeRequestDTOValida
     {
         public Guid EmpId { get; set; }
         public DateTimeOffset? CheckOutTime { get; set; }

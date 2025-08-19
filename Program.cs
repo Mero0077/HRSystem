@@ -17,7 +17,7 @@ namespace HRSystem
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Console.WriteLine("JWT KEY: " + Environment.GetEnvironmentVariable("JWT_SECRET_KEY"));
 
@@ -48,9 +48,16 @@ namespace HRSystem
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddJwtAuthentication(builder.Configuration);
             builder.Services.AddSingleton<RabbitMqPublisher>();
+            builder.Services.AddHostedService<RabbitMqReceiver>();
 
 
             var app = builder.Build();
+            using (var scope = app.Services.CreateScope())
+            {
+                var publisher = scope.ServiceProvider.GetRequiredService<RabbitMqPublisher>();
+                await publisher.InitAsync();
+            }
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
