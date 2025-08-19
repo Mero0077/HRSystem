@@ -20,13 +20,16 @@ namespace HRSystem.Features.Role.RemoveRole.Command
 
         public override async Task<RequestResult<RemoveRoleResponseVM>> Handle(RemoveRoleCommand request, CancellationToken cancellationToken)
         {
-            var exists= await mediator.Send(new IsRoleExistsQuery(request.RemoveRoleDTO.RoleId));
+            var userStateOrganizationId = userState.OrganizationId;
+
+
+            var exists = await mediator.Send(new IsRoleExistsQuery(request.RemoveRoleDTO.RoleId));
             if (!exists.IsSuccess) return RequestResult<RemoveRoleResponseVM>.Failure("Role does not exist!",ErrorCodes.NotFound);
 
             var assigned= await mediator.Send(new IsRoleAlreadyAssignedToAUserQuery(request.RemoveRoleDTO.RoleId));
             if (assigned) return RequestResult<RemoveRoleResponseVM>.Failure("This role cant be deleted as it is assigend to a user!");
 
-          var res= await _RoleRepository.HardDeleteAsync(request.RemoveRoleDTO.RoleId);
+            var res= await _RoleRepository.HardDeleteAsync(request.RemoveRoleDTO.RoleId, userStateOrganizationId);
                    await _RoleRepository.SaveChangesAsync();
 
             return res ?

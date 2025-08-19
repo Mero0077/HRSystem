@@ -17,7 +17,9 @@ namespace HRSystem.Features.Organization.RemoveOrganization.Commands
 
         public override async Task<RequestResult<RemoveOrganizationResponseVM>> Handle(RemoveOrganizationCommand request, CancellationToken cancellationToken)
         {
-         var res= await _OrganizationRepository.DeleteAsync(request.RemoveOrganizationDTO.Id);
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var res = await _OrganizationRepository.DeleteAsync(request.RemoveOrganizationDTO.Id, userStateOrganizationId);
             return (res.IsDeleted)?
                 RequestResult<RemoveOrganizationResponseVM>.Success(mapper.Map<RemoveOrganizationResponseVM>(res), "Organization deleted!"):
                 RequestResult<RemoveOrganizationResponseVM>.Failure("Organization already deleted!",ErrorCodes.AlreadyDeleted);

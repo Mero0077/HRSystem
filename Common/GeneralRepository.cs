@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using HRSystem.Models;
 using HRSystem.Common.AppDbContext;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HRSystem.Common
 {
@@ -16,21 +17,29 @@ namespace HRSystem.Common
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        public IQueryable<T> GetAll()
+        public IQueryable<T> GetAll(Guid? organizationId=null)
         {
+            if (organizationId.HasValue)
+            {
+                return _dbSet.Where(e => !e.IsDeleted && e.OrganizationId == organizationId);
+            }
             return _dbSet.Where(e => !e.IsDeleted);
         }
-        public IQueryable<T> Get(Expression<Func<T, bool>> expression)
+        public IQueryable<T> Get(Expression<Func<T, bool>> expression, Guid? OrganizationId=null)
         {
-            var res = GetAll().Where(expression);
+            var res = GetAll(OrganizationId).Where(expression);
             return res;
         }
         public async Task<T> GetOneWithTrackingAsync(Expression<Func<T, bool>> expression)
         {
             return await _dbSet.AsTracking().Where(expression).FirstOrDefaultAsync();
         }
-        public async Task<T> GetOneByIdAsync(Guid Id)
+        public async Task<T> GetOneByIdAsync(Guid Id, Guid? organizationId=null)
         {
+            if (organizationId.HasValue)
+            {
+                return await _dbSet.AsTracking().Where(e => e.Id == Id && e.OrganizationId == organizationId).FirstOrDefaultAsync();
+            }
             return await _dbSet.AsTracking().Where(e => e.Id == Id).FirstOrDefaultAsync();
         }
         public async Task<T> AddAsync(T entity)
@@ -77,9 +86,9 @@ namespace HRSystem.Common
             }
         }
 
-        public async Task<T> DeleteAsync(Guid Id)
+        public async Task<T> DeleteAsync(Guid Id, Guid OrganizationId)
         {
-            var res = await GetOneByIdAsync(Id);
+            var res = await GetOneByIdAsync(Id, OrganizationId);
 
             if (res != null || !res.IsDeleted)
             {
@@ -88,9 +97,9 @@ namespace HRSystem.Common
             return res;
         }
 
-        public async Task<bool> HardDeleteAsync(Guid Id)
+        public async Task<bool> HardDeleteAsync(Guid Id, Guid OrganizationId)
         {
-            var res = await GetOneByIdAsync(Id);
+            var res = await GetOneByIdAsync(Id, OrganizationId);
 
             if (res == null || res.IsDeleted)
             return false;
@@ -111,9 +120,9 @@ namespace HRSystem.Common
             return changes==entities.Count;
         }
 
-        public async Task<bool> IsExists(Guid Id)
+        public async Task<bool> IsExists(Guid Id, Guid OrganizationId)
         {
-            return await GetOneByIdAsync(Id) != null ? true : false;
+            return await GetOneByIdAsync(Id, OrganizationId) != null ? true : false;
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

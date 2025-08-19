@@ -20,7 +20,9 @@ namespace HRSystem.Features.Common.User.GetUserById
 
         public override async Task<RequestResult<GetUserByIdResponseDTO>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _userRepository.Get(e=>e.UserName==request.userName).ProjectTo<GetUserByIdResponseDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var result = await _userRepository.Get(e=>e.UserName==request.userName, userStateOrganizationId).ProjectTo<GetUserByIdResponseDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
             return RequestResult<GetUserByIdResponseDTO>.Success(result);
         }
     }

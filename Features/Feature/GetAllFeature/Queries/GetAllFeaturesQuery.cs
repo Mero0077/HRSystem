@@ -19,7 +19,9 @@ namespace HRSystem.Features.Feature.GetAllFeature.Queries
 
         public async override Task<RequestResult<IEnumerable<GetAllFeaturesResponseDTO>>> Handle(GetAllFeaturesQuery request, CancellationToken cancellationToken)
         {
-            var result = _featureRepository.Get(e => e.IsActive);
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var result = _featureRepository.Get(e => e.IsActive, userStateOrganizationId);
 
             var responseMapped = await mapper.ProjectTo<GetAllFeaturesResponseDTO>(result).ToListAsync();
 

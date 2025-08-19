@@ -8,8 +8,8 @@ using MediatR;
 
 namespace HRSystem.Features.Company.AddCompany.Command
 {
-    public record AddCompanyCommand(AddCompanyDTO AddCompanyDTO):IRequest<RequestResult<AddCompanyResponseVM>>;
-    public class AddCompanyCommandHandler : RequestHandlerBase<AddCompanyCommand,AddCompanyResponseVM>
+    public record AddCompanyCommand(AddCompanyDTO AddCompanyDTO):IRequest<RequestResult<AddCompanyResponseDTO>>;
+    public class AddCompanyCommandHandler : RequestHandlerBase<AddCompanyCommand, AddCompanyResponseDTO>
     {
         private IGeneralRepository<HRSystem.Models.Company> _CompanyRepository;
         public AddCompanyCommandHandler(IGeneralRepository<HRSystem.Models.Company> generalRepository ,RequestHandlerBaseParameters parameters) : base(parameters)
@@ -17,16 +17,18 @@ namespace HRSystem.Features.Company.AddCompany.Command
             _CompanyRepository = generalRepository;
         }
 
-        public override async Task<RequestResult<AddCompanyResponseVM>> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
+        public override async Task<RequestResult<AddCompanyResponseDTO>> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
         {
-         var exists = await mediator.Send(new CheckIfCompanyAlreadyExistsQuery(request.AddCompanyDTO.Name));
-            if (!exists.IsSuccess) return RequestResult<AddCompanyResponseVM>.Failure("already exists", ErrorCodes.AlreadyExists);
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var exists = await mediator.Send(new CheckIfCompanyAlreadyExistsQuery(request.AddCompanyDTO.Name));
+            if (!exists.IsSuccess) return RequestResult<AddCompanyResponseDTO>.Failure("already exists", ErrorCodes.AlreadyExists);
 
          var res= await _CompanyRepository.AddAsync(mapper.Map<HRSystem.Models.Company>(request.AddCompanyDTO));
-                  await _CompanyRepository.SaveChangesAsync();
+            res.OrganizationId = userStateOrganizationId;
              return res!=null?
-                RequestResult<AddCompanyResponseVM>.Success(mapper.Map<AddCompanyResponseVM>(res),"Company added"):
-                RequestResult<AddCompanyResponseVM>.Failure("Could not add company",ErrorCodes.AlreadyExists);
+                RequestResult<AddCompanyResponseDTO>.Success(mapper.Map<AddCompanyResponseDTO>(res),"Company added"):
+                RequestResult<AddCompanyResponseDTO>.Failure("Could not add company",ErrorCodes.AlreadyExists);
 
         }
     }

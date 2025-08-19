@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Branch\Update Branch\Mapping profile\" />
     <Folder Include="Features\FeatureScope\GetFeatureScope\Command\" />
     <Folder Include="Features\FeatureScope\RemoveFeatureScope\Query\" />
     <Folder Include="Features\Feature\" />

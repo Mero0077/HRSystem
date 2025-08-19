@@ -17,7 +17,9 @@ namespace HRSystem.Features.Company.AddCompany.Queries
 
         public override async Task<RequestResult<bool>> Handle(CheckIfCompanyAlreadyExistsQuery request, CancellationToken cancellationToken)
         {
-            var res = await _CompanyRepository.Get(e => e.Name == request.Name).FirstOrDefaultAsync();
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var res = await _CompanyRepository.Get(e => e.Name == request.Name, userStateOrganizationId).FirstOrDefaultAsync();
             return res == null ? RequestResult<bool>.Failure("does not exist") : RequestResult<bool>.Success(true);
         }
 
