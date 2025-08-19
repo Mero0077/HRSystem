@@ -16,7 +16,7 @@ namespace HRSystem.Features.Auth.Jwt
         {
             this.options = options.Value;
         }
-        string IJwtGenerateHandler.GenerateToken(string userName, Guid userId, List<Guid> roleIds)
+        string IJwtGenerateHandler.GenerateToken(string userName, Guid userId, List<Guid> roleIds,Guid organizationId)
         {
             var encodedSecretKey = JwtHelper.GetSymmetricSecurityKey();
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -24,6 +24,7 @@ namespace HRSystem.Features.Auth.Jwt
           {
               new Claim(ClaimTypes.NameIdentifier,userId.ToString()),
               new Claim(ClaimTypes.Name,userName),
+              new Claim("OrganizationId",organizationId.ToString())
           };
 
             foreach (var roleId in roleIds)

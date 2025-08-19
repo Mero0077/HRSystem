@@ -16,7 +16,9 @@ namespace HRSystem.Features.Company.AssignCompanyToOrganization.Command
 
         public override async Task<RequestResult<AssignCompanyToOrganizationResponseDTO>> Handle(AssignCompanyToOrganizationCommand request, CancellationToken cancellationToken)
         {
-            var company = await _companyRepository.GetOneByIdAsync(request.AssignCompanyToOrganizationRequestDTO.CompanyId);
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var company = await _companyRepository.GetOneByIdAsync(request.AssignCompanyToOrganizationRequestDTO.CompanyId, userStateOrganizationId);
             if (company == null) return RequestResult<AssignCompanyToOrganizationResponseDTO>.Failure("Company does not exist");
 
             company.OrganizationId = request.AssignCompanyToOrganizationRequestDTO.OrganizationId;

@@ -20,7 +20,10 @@ namespace HRSystem.Features.Common.UserRole.Queries
 
         public override async Task<RequestResult<UserWithRoleResponseVM>> Handle(GetUserWithTheirRoles request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.Get(e => e.UserName == request.GetUserWithRoleDTO.UserName).Select
+            var userStateOrganizationId = userState.OrganizationId;
+
+
+            var user = await _userRepository.Get(e => e.UserName == request.GetUserWithRoleDTO.UserName, userStateOrganizationId).Select
                  (e => new GetUserWithRoleDTO
                  {
                      UserId = e.Id,

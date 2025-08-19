@@ -18,7 +18,9 @@ namespace HRSystem.Features.RoleFeature.GetFeaturesAssignedToRole.Query
 
         public override async Task<RequestResult<GetFeaturesAssignedToRoleResponseVM>> Handle(GetFeaturesAssignedToRoleQuery request, CancellationToken cancellationToken)
         {
-            var res = await _RoleFeatureRepository.Get(e => e.RoleId == request.RoleId).ToListAsync();
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var res = await _RoleFeatureRepository.Get(e => e.RoleId == request.RoleId, userStateOrganizationId).ToListAsync();
             var mapped = new GetFeaturesAssignedToRoleResponseVM
             {
                 FeatureIds = res.Select(e => e.RoleId).ToList()

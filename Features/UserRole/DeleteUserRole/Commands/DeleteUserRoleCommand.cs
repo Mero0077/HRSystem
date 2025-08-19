@@ -17,10 +17,12 @@ namespace HRSystem.Features.UserRole.DeleteUserRole.Commands
 
         public override async Task<RequestResult<bool>> Handle(DeleteUserRoleCommand request, CancellationToken cancellationToken)
         {
-          var UserRole= await _UserRoleRepository.Get(e => e.UserId == request.DeleteUserRoleDTO.UserId && e.RoleId == request.DeleteUserRoleDTO.RoleId).FirstOrDefaultAsync();
-          if (UserRole == null) return RequestResult<bool>.Failure("User is not assigend to this role!");
+            var userStateOrganizationId = userState.OrganizationId;
 
-          var res= await _UserRoleRepository.HardDeleteAsync(UserRole.Id);
+            var UserRole = await _UserRoleRepository.Get(e => e.UserId == request.DeleteUserRoleDTO.UserId && e.RoleId == request.DeleteUserRoleDTO.RoleId, userStateOrganizationId).FirstOrDefaultAsync();
+            if (UserRole == null) return RequestResult<bool>.Failure("User is not assigend to this role!");
+
+          var res= await _UserRoleRepository.HardDeleteAsync(UserRole.Id,UserRole.OrganizationId);
             return res==null ?
                 RequestResult<bool>.Failure("Could not delete roles!") :
                 RequestResult<bool>.Success(true, "roles deleted successfully!");

@@ -20,17 +20,16 @@ namespace HRSystem.Features.Common.Department.GetDepartmentById.Queries
 
         public override async Task<RequestResult<GetDepartmentByIdResponseDTO>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {
+            var userStateOrganizationId = userState.OrganizationId;
+            request.GetDepartmentByIdRequestDTO.OrganizationId = userStateOrganizationId;
+
             var department = await _departmentRepository
-                .Get(e => e.Id == request.GetDepartmentByIdRequestDTO.DepartmentId)
+                .Get(e => e.Id == request.GetDepartmentByIdRequestDTO.DepartmentId, request.GetDepartmentByIdRequestDTO.OrganizationId)
                 .ProjectTo<GetDepartmentByIdResponseDTO>(mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (department == null)
                 return RequestResult<GetDepartmentByIdResponseDTO>.Failure("Department is n't found",ErrorCodes.NotFound);
-
-            if (request.GetDepartmentByIdRequestDTO.OrganizationId.HasValue && request.GetDepartmentByIdRequestDTO.OrganizationId != department.OrganizationId)
-                return RequestResult<GetDepartmentByIdResponseDTO>.Failure("Department does not belong to the specified Organization.",
-            ErrorCodes.NotFound);
 
             if(request.GetDepartmentByIdRequestDTO.CompanyId.HasValue && request.GetDepartmentByIdRequestDTO.CompanyId != department.CompanyId)
                 return RequestResult<GetDepartmentByIdResponseDTO>.Failure("Department does not belong to the specified Company.",

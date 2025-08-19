@@ -9,7 +9,7 @@ namespace HRSystem.Features.Company.AddCompany.MappingProfile
         {
             CreateMap<AddCompanyRequestVM,AddCompanyDTO>();
             CreateMap<AddCompanyDTO, HRSystem.Models.Company>();
-            CreateMap<HRSystem.Models.Company,AddCompanyResponseVM>();
+            CreateMap<HRSystem.Models.Company,AddCompanyResponseDTO>();
         }
     }
 }

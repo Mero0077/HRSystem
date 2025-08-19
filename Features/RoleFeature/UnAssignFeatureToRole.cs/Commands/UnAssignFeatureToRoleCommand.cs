@@ -5,6 +5,7 @@ using HRSystem.Features.Common.Feature.Queries;
 using HRSystem.Features.Common.Role.Queries;
 using HRSystem.Features.Common.RoleFeature.Queries;
 using HRSystem.Features.RoleFeature.UnAssignFeatureToRole.cs.DTOs;
+using HRSystem.Models;
 using MediatR;
 
 namespace HRSystem.Features.RoleFeature.UnAssignFeatureToRole.cs.Commands
@@ -36,7 +37,7 @@ namespace HRSystem.Features.RoleFeature.UnAssignFeatureToRole.cs.Commands
 
             var entity = await _roleFeatureRepository.GetOneWithTrackingAsync(e=>e.RoleId == request.UnAssignFeatureToRoleRequestDTO.RoleId && e.FeatureId==request.UnAssignFeatureToRoleRequestDTO.FeatureId);
 
-            await _roleFeatureRepository.DeleteAsync(entity.Id);
+            await _roleFeatureRepository.DeleteAsync(entity.Id,entity.OrganizationId);
             await _roleFeatureRepository.SaveChangesAsync();
             return RequestResult<bool>.Success(true);
         }

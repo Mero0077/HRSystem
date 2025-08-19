@@ -38,11 +38,10 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
             var targetId = request.AssignRoleScopeRequestDTO.TargetId;
             var nodeLevel = request.AssignRoleScopeRequestDTO.NodeLevel;
 
-            //Token
+            var userStateOrganizationId = userState.OrganizationId;
 
-            //var orgIdFromToken = Guid.Parse(_httpContextAccessor.HttpContext?.User.FindFirstValue("orgId") ?? throw new UnauthorizedAccessException("No orgId in token"));
-            
-            var existingScopes = await _roleScopeRepository.Get(e => e.RoleId == roleId && e.IsActive)
+
+            var existingScopes = await _roleScopeRepository.Get(e => e.RoleId == roleId && e.IsActive, userStateOrganizationId)
                .ToListAsync(cancellationToken);
             foreach (var scope in existingScopes)
             {
@@ -123,8 +122,6 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
 
             }
         }
-
-
         private async Task BuildChildrenHierarchyAsync(CompanyHierarchyResponseDTO companyHierarchyResponseDTO, CancellationToken cancellationToken)
         {
 
@@ -147,7 +144,6 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
 
             }
         }
-
         private async Task BuildChildrenHierarchyAsync(BranchHierarchyResponseDTO branchHierarchyResponseDTO, CancellationToken cancellationToken)
         {
 
@@ -200,7 +196,7 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
         {
             return $"{roleId}|{organizationId}|{companyId}|{branchId}|{departmentId}";
         }
-        private void AddRoleScopeIfNotExists(List<Models.RoleScope> roleScopes, Guid roleId, Guid organiozationId, Guid companyId, Guid branchId, Guid departmentId)
+        private bool AddRoleScopeIfNotExists(List<Models.RoleScope> roleScopes, Guid roleId, Guid organiozationId, Guid companyId, Guid branchId, Guid departmentId)
         {
             var scopeKey = GenerateScopeKey(roleId, organiozationId, companyId, branchId, departmentId);
             if (!_existingScopeKeys.Contains(scopeKey))
@@ -216,7 +212,9 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
                     IsActive = true,
                     RoleId = roleId
                 });
+                return true;
             }
+            return false ;
         }
     }
 }
