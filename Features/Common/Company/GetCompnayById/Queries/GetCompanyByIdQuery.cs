@@ -20,10 +20,6 @@ namespace HRSystem.Features.Common.Company.GetCompnayByIdQuery.Queries
 
         public override async Task<RequestResult<GetCompanyByIdQueryResponseDTO>> Handle(GetCompanyByIdQuery request, CancellationToken cancellationToken)
         {
-            var userStateOrganizationId = userState.OrganizationId;
-
-            request.GetCompanyByIdQueryRequest.OrganizationId = userStateOrganizationId;
-
             var company = await _companyRepository.
                  Get(e => e.Id == request.GetCompanyByIdQueryRequest.CompanyId, request.GetCompanyByIdQueryRequest.OrganizationId)
                 .ProjectTo<GetCompanyByIdQueryResponseDTO>(mapper.ConfigurationProvider)

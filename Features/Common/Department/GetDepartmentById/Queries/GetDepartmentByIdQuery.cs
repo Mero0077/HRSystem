@@ -20,8 +20,7 @@ namespace HRSystem.Features.Common.Department.GetDepartmentById.Queries
 
         public override async Task<RequestResult<GetDepartmentByIdResponseDTO>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {
-            var userStateOrganizationId = userState.OrganizationId;
-            request.GetDepartmentByIdRequestDTO.OrganizationId = userStateOrganizationId;
+            
 
             var department = await _departmentRepository
                 .Get(e => e.Id == request.GetDepartmentByIdRequestDTO.DepartmentId, request.GetDepartmentByIdRequestDTO.OrganizationId)

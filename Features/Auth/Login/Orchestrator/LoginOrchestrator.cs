@@ -6,7 +6,7 @@ using HRSystem.Features.Auth.Jwt.interfaces;
 using HRSystem.Features.Auth.Login.DTO;
 using HRSystem.Features.Common.User.GetUserById;
 using HRSystem.Features.Common.User.Queries;
-using HRSystem.Features.Common.UserRole.Queries;
+using HRSystem.Features.Common.UserRole.GetUserWithRole.Queries;
 using HRSystem.Models;
 using MediatR;
 using System.Security.Cryptography;
@@ -41,7 +41,7 @@ namespace HRSystem.Features.Auth.Login.Orchestrator
             //if (user.Data == null)
             //    return RequestResult<LoginResponseDTOs>.Failure("Invalid Username or Pass!", ErrorCodes.NotFound);
 
-            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.UserId, user.Data.RoleIds.ToList());
+            string token = _jwtGenerateHandler.GenerateToken(user.Data.UserName, user.Data.UserId, user.Data.RoleIds.ToList(),user.Data.OrganizationId);
 
             var refreshToken = new RefreshToken()
             {

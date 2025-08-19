@@ -1,5 +1,5 @@
 ﻿using HRSystem.Common;
-using HRSystem.Common.MessageBroker;
+//using HRSystem.Common.MessageBroker;
 using HRSystem.Common.Views;
 using HRSystem.Features.Branch.Create_Branch.Command;
 using HRSystem.Features.Branch.Create_Branch.DTOS;
@@ -12,11 +12,11 @@ namespace HRSystem.Features.Branch.Create_Branch.Endpoint
     [ApiController]
     public class CreateBranchController : BaseEndPoint<CreateBranchRequestViewModel, CreateBranchResponseViewModel>
     {
-        private readonly RabbitMqPublisher rabbitMqPublisher;
+        //private readonly RabbitMqPublisher rabbitMqPublisher;
 
-        public CreateBranchController(EndPointBaseParameters<CreateBranchRequestViewModel> parameters,RabbitMqPublisher rabbitMqPublisher) : base(parameters)
+        public CreateBranchController(EndPointBaseParameters<CreateBranchRequestViewModel> parameters) : base(parameters)
         {
-            this.rabbitMqPublisher = rabbitMqPublisher;
+            //this.rabbitMqPublisher = rabbitMqPublisher;
         }
 
         [HttpPost]
@@ -41,23 +41,23 @@ namespace HRSystem.Features.Branch.Create_Branch.Endpoint
           
         }
 
-        [HttpPost]
-        public async Task<string> Publish(string message)
-        {
-          await  rabbitMqPublisher.PublishMessage(message);
-            return message;
-        }
+        //[HttpPost]
+        //public async Task<string> Publish(string message)
+        //{
+        //  await  rabbitMqPublisher.PublishMessage(message);
+        //    return message;
+        //}
 
-        [HttpPost]
-        public async Task<EndPointResponse<string>> AddBr([FromBody] CreateBranchRequestViewModel request)
-        {
-            //add br
+        //[HttpPost]
+        //public async Task<EndPointResponse<string>> AddBr([FromBody] CreateBranchRequestViewModel request)
+        //{
+        //    //add br
 
-            var message = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-          await  rabbitMqPublisher.PublishMessage(message);
+        //    var message = Newtonsoft.Json.JsonConvert.SerializeObject(request);
+        //  await  rabbitMqPublisher.PublishMessage(message);
 
-            return EndPointResponse<string>.Failure("s");
+        //    return EndPointResponse<string>.Failure("s");
 
-        }
+        //}
     }
 }

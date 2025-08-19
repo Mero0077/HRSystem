@@ -18,8 +18,6 @@ namespace HRSystem.Features.Common.Branch.GetBranchByIdQuery.Queries
 
         public override async Task<RequestResult<GetBranchByIdQueryResponseDTO>> Handle(GetBranchByIdQuery request, CancellationToken cancellationToken)
         {
-            var userStateOrganizationId = userState.OrganizationId;
-            request.GetBranchByIdQueryRequestDTO.OrganizationId = userStateOrganizationId;
             var branch = await _branchRepository.GetOneByIdAsync(request.GetBranchByIdQueryRequestDTO.BranchId, request.GetBranchByIdQueryRequestDTO.OrganizationId);
             if (branch == null)
                 return RequestResult<GetBranchByIdQueryResponseDTO>.Failure("branch is not found", ErrorCodes.NotFound);

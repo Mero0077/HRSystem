@@ -6,5 +6,7 @@
         public string UserName { get; set; }
 
         public ICollection<Guid> RoleIds { get; set; }
+
+        public Guid OrganizationId { get; set; }
     }
 }

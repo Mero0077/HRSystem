@@ -58,24 +58,24 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
                     if (!organizationResult.IsSuccess)
                         return RequestResult<AssignRoleScopeResponseDTO>.Failure(organizationResult.Message, organizationResult.ErrorCodes);
                     var orgHierarchy = mapper.Map<OrganizationHierarchyResponseDTO>(organizationResult.Data);
-                    await BuildChildrenHierarchyAsync(orgHierarchy, cancellationToken);
+                    await BuildChildrenHierarchyAsync(orgHierarchy, userStateOrganizationId, cancellationToken);
                     AddOrganizationCascade(roleScopeList, request.AssignRoleScopeRequestDTO.RoleId, orgHierarchy);
                     break;
 
                 case NodeLevel.Company:
-                    var company = await mediator.Send(new GetCompanyByIdQuery(new GetCompanyByIdQueryRequestDTO { CompanyId = targetId }), cancellationToken); 
+                    var company = await mediator.Send(new GetCompanyByIdQuery(new GetCompanyByIdQueryRequestDTO { CompanyId = targetId,OrganizationId= userStateOrganizationId }), cancellationToken); 
                     if (!company.IsSuccess)
                         return RequestResult<AssignRoleScopeResponseDTO>.Failure("No Company Found", ErrorCodes.NotFound);
-                    var companyHierarchy = mapper.Map<CompanyHierarchyResponseDTO>(company);
+                    var companyHierarchy = mapper.Map<CompanyHierarchyResponseDTO>(company.Data);
                     await BuildChildrenHierarchyAsync(companyHierarchy, cancellationToken);
                     AddCompanyCascade(roleScopeList, request.AssignRoleScopeRequestDTO.RoleId, companyHierarchy);
                     break;
 
                 case NodeLevel.Branch:
-                    var branch = await mediator.Send(new GetBranchByIdQuery(new GetBranchByIdQueryRequestDTO { BranchId = targetId }), cancellationToken); 
+                    var branch = await mediator.Send(new GetBranchByIdQuery(new GetBranchByIdQueryRequestDTO { BranchId = targetId,OrganizationId = userStateOrganizationId }), cancellationToken); 
                     if (!branch.IsSuccess)
                         return RequestResult<AssignRoleScopeResponseDTO>.Failure("No Branch Found", ErrorCodes.NotFound);
-                    var branchHierarchy = mapper.Map<BranchHierarchyResponseDTO>(branch);
+                    var branchHierarchy = mapper.Map<BranchHierarchyResponseDTO>(branch.Data);
                     await BuildChildrenHierarchyAsync(branchHierarchy, cancellationToken);
                     AddBranchCascade(roleScopeList, request.AssignRoleScopeRequestDTO.RoleId, branchHierarchy);
                     break;
@@ -102,14 +102,14 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
                 AssignedToId = targetId,
             });
         }
-        private async Task BuildChildrenHierarchyAsync(OrganizationHierarchyResponseDTO organizationHierarchyResponseDTO,CancellationToken cancellationToken)
+        private async Task BuildChildrenHierarchyAsync(OrganizationHierarchyResponseDTO organizationHierarchyResponseDTO,Guid userStateOrganizationId, CancellationToken cancellationToken)
         {
 
             foreach (var company in organizationHierarchyResponseDTO.Companies.ToList())
             {
                 var companyResult = await mediator.Send(new GetCompanyByIdQuery(new
                     GetCompanyByIdQueryRequestDTO
-                { CompanyId = company.Id, OrganizationId = company.OrganizationId }
+                { CompanyId = company.Id, OrganizationId = userStateOrganizationId }
                     ));
                 if (companyResult.IsSuccess)
                 {
@@ -169,14 +169,14 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
 
         private void AddOrganizationCascade(List<Models.RoleScope> roleScopes, Guid roleId, OrganizationHierarchyResponseDTO organization)
         {
-            AddRoleScopeIfNotExists(roleScopes, roleId, organization.Id, Guid.Empty, Guid.Empty, Guid.Empty);
+            //AddRoleScopeIfNotExists(roleScopes, roleId, organization.Id, Guid.Empty, Guid.Empty, Guid.Empty);
             foreach (var company in organization.Companies)
                 AddCompanyCascade(roleScopes, roleId, company);
         }
 
         private void AddCompanyCascade(List<Models.RoleScope> roleScopes, Guid roleId, CompanyHierarchyResponseDTO company)
         {
-            AddRoleScopeIfNotExists(roleScopes, roleId, company.OrganizationId, company.Id, Guid.Empty, Guid.Empty);
+            //AddRoleScopeIfNotExists(roleScopes, roleId, company.OrganizationId, company.Id, Guid.Empty, Guid.Empty);
             foreach (var branch in company.Branches)
                  AddBranchCascade(roleScopes, roleId, branch);
 
@@ -184,7 +184,7 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
 
         private void AddBranchCascade(List<Models.RoleScope> roleScopes, Guid roleId, BranchHierarchyResponseDTO branch)
         {
-            AddRoleScopeIfNotExists(roleScopes, roleId, branch.OrganizationId, branch.CompanyId, branch.Id, Guid.Empty);
+            //AddRoleScopeIfNotExists(roleScopes, roleId, branch.OrganizationId, branch.CompanyId, branch.Id, Guid.Empty);
             foreach (var department in branch.Departments)
                  AddDepartmentCascade(roleScopes, roleId, department);
         }
@@ -192,7 +192,7 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Commands
         {
             AddRoleScopeIfNotExists(roleScopes, roleId, department.OrganizationId, department.CompanyId, department.BranchId, department.Id);
         }
-        private string GenerateScopeKey(Guid roleId, Guid organizationId, Guid companyId, Guid branchId, Guid? departmentId)
+        private string GenerateScopeKey(Guid roleId, Guid organizationId, Guid companyId, Guid branchId, Guid departmentId)
         {
             return $"{roleId}|{organizationId}|{companyId}|{branchId}|{departmentId}";
         }

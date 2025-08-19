@@ -9,6 +9,7 @@ namespace HRSystem.Features.Auth.Login.MappingProfile
         {
             CreateMap<LoginRequestVM, LoginDTO>();
             CreateMap<LoginResponseDTOs,LoginResponseVM>();
+           
         }
     }
 }
