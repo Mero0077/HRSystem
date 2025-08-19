@@ -18,14 +18,15 @@ namespace HRSystem.Features.Common.Branch.GetBranchByIdQuery.Queries
 
         public override async Task<RequestResult<GetBranchByIdQueryResponseDTO>> Handle(GetBranchByIdQuery request, CancellationToken cancellationToken)
         {
-            var branch = await _branchRepository.GetOneByIdAsync(request.GetBranchByIdQueryRequestDTO.BranchId);
+            var userStateOrganizationId = userState.OrganizationId;
+            request.GetBranchByIdQueryRequestDTO.OrganizationId = userStateOrganizationId;
+            var branch = await _branchRepository.GetOneByIdAsync(request.GetBranchByIdQueryRequestDTO.BranchId, request.GetBranchByIdQueryRequestDTO.OrganizationId);
             if (branch == null)
                 return RequestResult<GetBranchByIdQueryResponseDTO>.Failure("branch is not found", ErrorCodes.NotFound);
             var responseDTO =mapper.Map<GetBranchByIdQueryResponseDTO>(branch);
             if(request.GetBranchByIdQueryRequestDTO.CompanyId.HasValue && request.GetBranchByIdQueryRequestDTO.CompanyId != responseDTO.CompanyId )
                 return RequestResult<GetBranchByIdQueryResponseDTO>.Failure("Branch doesn't belong to this company", ErrorCodes.NotFound);
-            if (request.GetBranchByIdQueryRequestDTO.OrganizationId.HasValue && request.GetBranchByIdQueryRequestDTO.OrganizationId != responseDTO.OrganizationId)
-                return RequestResult<GetBranchByIdQueryResponseDTO>.Failure("Branch doesn't belong to this organization", ErrorCodes.NotFound);
+     
             return RequestResult<GetBranchByIdQueryResponseDTO>.Success(responseDTO);
 
         }

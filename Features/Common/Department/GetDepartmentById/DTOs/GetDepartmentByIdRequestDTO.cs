@@ -2,7 +2,7 @@
 {
     public class GetDepartmentByIdRequestDTO
     {
-        public Guid? OrganizationId { get; set; } =null;
+        public Guid OrganizationId { get; set; } 
         public Guid DepartmentId { get; set; }
 
         public Guid? CompanyId { get; set; } = null;

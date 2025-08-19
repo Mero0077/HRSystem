@@ -18,7 +18,10 @@ namespace HRSystem.Features.Common.FeatureEndPoint.GetEndpointFeatures.Query
 
         public override async Task<RequestResult<GetEndPointFeaturesResponseVM>> Handle(GetEndpointFeaturesQuery request, CancellationToken cancellationToken)
         {
-            var res = await _EndPointFeatureRepository.Get(e=>e.EndPointActionId== request.Id).ToListAsync();
+            var userStateOrganizationId = userState.OrganizationId;
+
+
+            var res = await _EndPointFeatureRepository.Get(e=>e.EndPointActionId== request.Id, userStateOrganizationId).ToListAsync();
 
             var mapped = new GetEndPointFeaturesResponseVM
             {

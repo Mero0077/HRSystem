@@ -16,10 +16,13 @@ namespace HRSystem.Features.Company.AddCompany
         [HttpPost]
         public async Task<EndPointResponse<AddCompanyResponseVM>> AddCompany([FromBody] AddCompanyRequestVM request)
         {
+
            var res= await mediator.Send(new AddCompanyCommand(mapper.Map<AddCompanyDTO>(request)));
+
+            var responseViewModel = mapper.Map<AddCompanyResponseVM>(res.Data);
            return !res.IsSuccess?
                 EndPointResponse<AddCompanyResponseVM>.Failure("Cant add", ErrorCodes.AlreadyExists):
-                EndPointResponse<AddCompanyResponseVM>.Success(res.Data, "Company added!");
+                EndPointResponse<AddCompanyResponseVM>.Success(responseViewModel, "Company added!");
         }
     }
 }

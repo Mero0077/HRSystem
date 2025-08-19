@@ -17,7 +17,9 @@ namespace HRSystem.Features.Role.AddRole.Queries
 
         public override async Task<RequestResult<bool>> Handle(IsRoleAlreadyExistsQuery request, CancellationToken cancellationToken)
         {
-         var exists= await _RoleRepository.Get(e => e.Name == request.Name).FirstOrDefaultAsync();
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var exists = await _RoleRepository.Get(e => e.Name == request.Name, userStateOrganizationId).FirstOrDefaultAsync(cancellationToken);
             return exists != null ?
                 RequestResult<bool>.Failure("Role does not exist") :
                 RequestResult<bool>.Success(true);

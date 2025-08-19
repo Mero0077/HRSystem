@@ -4,13 +4,13 @@ namespace HRSystem.Common
 {
     public interface IGeneralRepository<T>
     {
-            public IQueryable<T> GetAll();
+            public IQueryable<T> GetAll(Guid? OrganizationId=null);
 
-            public IQueryable<T> Get(Expression<Func<T, bool>> expression);
+            public IQueryable<T> Get(Expression<Func<T, bool>> expression, Guid? OrganizationId = null);
 
             public Task<T> GetOneWithTrackingAsync(Expression<Func<T, bool>> expression);
 
-            public Task<T> GetOneByIdAsync(Guid Id);
+            public Task<T> GetOneByIdAsync(Guid Id, Guid? OrganizationId = null);
 
             public Task<T> AddAsync(T entity);
             public Task<List<T>> AddAsyncRange(List<T> entities);
@@ -19,11 +19,11 @@ namespace HRSystem.Common
 
             public Task UpdateIncludeAsync(T entity, params string[] modifiedProperties);
 
-            public Task<T> DeleteAsync(Guid Id);
-            public Task<bool> HardDeleteAsync(Guid Id);
+            public Task<T> DeleteAsync(Guid Id, Guid OrganizationId);
+            public Task<bool> HardDeleteAsync(Guid Id, Guid OrganizationId);
            public Task<bool> DeleteAsyncMass(List<T> entities);
 
-            public Task<bool> IsExists(Guid Id);
+            public Task<bool> IsExists(Guid Id, Guid OrganizationId);
 
             public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 

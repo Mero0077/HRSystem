@@ -17,7 +17,9 @@ namespace HRSystem.Features.FeatureScope.GetFeatureScope.Query
 
         public override async Task<RequestResult<GetAllFeaturesResponseDTO>> Handle(GetFeatureScopeQuery request, CancellationToken cancellationToken)
         {
-            var res = await _repository.GetOneByIdAsync(request.getFeatureScopeRequestDTO.FeatureId);
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var res = await _repository.GetOneByIdAsync(request.getFeatureScopeRequestDTO.FeatureId, userStateOrganizationId);
             return res!=null ?
                     RequestResult<GetAllFeaturesResponseDTO>.Success(mapper.Map<GetAllFeaturesResponseDTO>(res), "Feature already exists!") :
                     RequestResult<GetAllFeaturesResponseDTO>.Failure("Feature scope does not exist!");

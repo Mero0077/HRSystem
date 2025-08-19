@@ -18,6 +18,8 @@ namespace HRSystem.Features.FeatureScope.AddFeatureScope.Command
 
         public override async Task<RequestResult<AddFeatureScopeResponseDTO>> Handle(AddFeatureScopeCommand request, CancellationToken cancellationToken)
         {
+            var userStateOrganizationId = userState.OrganizationId;
+            request.AddFeatureScopeRequestDTO.OrganizationId = userStateOrganizationId;
             var exists = await mediator.Send(new IsFeatureScopeExistsQuery(request.AddFeatureScopeRequestDTO));
             if (exists.IsSuccess) return RequestResult<AddFeatureScopeResponseDTO>.Failure(exists.Message);
 

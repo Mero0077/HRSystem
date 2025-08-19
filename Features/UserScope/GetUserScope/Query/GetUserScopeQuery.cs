@@ -16,7 +16,9 @@ namespace HRSystem.Features.UserScope.GetUserScope.Query
 
         public override async Task<RequestResult<GetUserScopeResponseDTO>> Handle(GetUserScopeQuery request, CancellationToken cancellationToken)
         {
-            var res = await _generalRepository.GetOneByIdAsync(request.GetUserScopeRequestDTO.Id);
+            var userStateOrganizationId = userState.OrganizationId;
+
+            var res = await _generalRepository.GetOneByIdAsync(request.GetUserScopeRequestDTO.Id, userStateOrganizationId);
             return res != null ?
                     RequestResult<GetUserScopeResponseDTO>.Success(mapper.Map<GetUserScopeResponseDTO>(res),"Record fetched") :
                     RequestResult<GetUserScopeResponseDTO>.Failure("Record does not exist");

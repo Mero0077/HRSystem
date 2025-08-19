@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HRSystem.Common.Enums;
+using HRSystem.Common.Views;
 using HRSystem.Features.Common.FeatureEndPoint.DTO;
 using HRSystem.Features.Common.FeatureEndPoint.GetEndpointFeatures.Query;
 using HRSystem.Features.EndPoints;
@@ -19,17 +20,21 @@ namespace HRSystem.Features.Common.RoleFeature.Filters.Auth
     public class CustomAuthorizedFilter : ActionFilterAttribute
     {
         private readonly IMediator _mediator;
-        private readonly SystemFeature _systemFeature;
-        private IMapper _mapper;
+        //private readonly SystemFeature _systemFeature;
+        //private IMapper _mapper;
 
         public CustomAuthorizedFilter(IMediator mediator,IMapper mapper) 
         {
             this._mediator = mediator;
-            this._mapper = mapper;
+            //this._mapper = mapper;
         }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            var userState =  context.HttpContext.RequestServices.GetRequiredService<UserStateViewModel>();
+
+
+
             var path= context.HttpContext.Request.Path.Value?.Trim().ToLower();
             if (!string.IsNullOrEmpty(path) && path.EndsWith("/")) path = path.TrimEnd('/');
 
