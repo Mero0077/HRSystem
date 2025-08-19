@@ -1,5 +1,6 @@
 ﻿using HRSystem.Common;
 using HRSystem.Common.Views;
+using HRSystem.Features.Common.RoleFeature.Filters.Auth;
 using HRSystem.Features.RoleScope.AssignRoleScope.Commands;
 using HRSystem.Features.RoleScope.AssignRoleScope.DTOs;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,7 @@ namespace HRSystem.Features.RoleScope.AssignRoleScope.Endpoint
         {
         }
         [HttpPost]
+        [TypeFilter(typeof(CustomAuthorizedFilter))]
         public async Task<EndPointResponse<AssignRoleScopeResponseViewModel>> AssignRoleScope([FromBody] AssignRoleScopeRequestViewModel assignRoleScopeRequestViewModel)
         {
             var requestDTO = mapper.Map<AssignRoleScopeRequestDTO>(assignRoleScopeRequestViewModel);

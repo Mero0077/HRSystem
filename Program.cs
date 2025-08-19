@@ -2,8 +2,9 @@
 using FluentValidation;
 using HRSystem.Common;
 using HRSystem.Common.AppDbContext;
-using HRSystem.Common.MessageBroker;
+//using HRSystem.Common.MessageBroker;
 using HRSystem.Common.Middlewares;
+using HRSystem.Common.Views;
 using HRSystem.Features.Attendance.CheckIn.CheckInFilterInterceptor;
 using HRSystem.Features.Auth.Jwt.Helper;
 using HRSystem.Features.Branch.Create_Branch;
@@ -35,8 +36,8 @@ namespace HRSystem
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
-          
-          
+
+            builder.Services.AddScoped<UserStateViewModel>();
             builder.Services.AddScoped<RequestHandlerBaseParameters>();
             builder.Services.AddScoped<TransactionMiddleWare>();
             builder.Services.AddScoped<CustomAuthorizedFilter>();
@@ -47,16 +48,16 @@ namespace HRSystem
             builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddJwtAuthentication(builder.Configuration);
-            builder.Services.AddSingleton<RabbitMqPublisher>();
-            builder.Services.AddHostedService<RabbitMqReceiver>();
+            //builder.Services.AddSingleton<RabbitMqPublisher>();
+            //builder.Services.AddHostedService<RabbitMqReceiver>();
 
 
             var app = builder.Build();
-            using (var scope = app.Services.CreateScope())
-            {
-                var publisher = scope.ServiceProvider.GetRequiredService<RabbitMqPublisher>();
-                await publisher.InitAsync();
-            }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var publisher = scope.ServiceProvider.GetRequiredService<RabbitMqPublisher>();
+            //    await publisher.InitAsync();
+            //}
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -7,10 +7,10 @@ using HRSystem.Features.Common.UserRole.GetUserWithRole;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace HRSystem.Features.Common.UserRole.Queries
+namespace HRSystem.Features.Common.UserRole.GetUserWithRole.Queries
 {
-    public record GetUserWithTheirRoles(LoginDTO GetUserWithRoleDTO) : IRequest<RequestResult<UserWithRoleResponseVM>>;
-    public class GetUserWithTheirRolesHandler : RequestHandlerBase<GetUserWithTheirRoles, UserWithRoleResponseVM>
+    public record GetUserWithTheirRoles(LoginDTO GetUserWithRoleDTO) : IRequest<RequestResult<UserWithRoleResponseDTO>>;
+    public class GetUserWithTheirRolesHandler : RequestHandlerBase<GetUserWithTheirRoles, UserWithRoleResponseDTO>
     {
         private IGeneralRepository<Models.User> _userRepository;
         public GetUserWithTheirRolesHandler(IGeneralRepository<Models.User> generalRepository, RequestHandlerBaseParameters parameters) : base(parameters)
@@ -18,26 +18,26 @@ namespace HRSystem.Features.Common.UserRole.Queries
             _userRepository = generalRepository;
         }
 
-        public override async Task<RequestResult<UserWithRoleResponseVM>> Handle(GetUserWithTheirRoles request, CancellationToken cancellationToken)
+        public override async Task<RequestResult<UserWithRoleResponseDTO>> Handle(GetUserWithTheirRoles request, CancellationToken cancellationToken)
         {
-            var userStateOrganizationId = userState.OrganizationId;
 
 
-            var user = await _userRepository.Get(e => e.UserName == request.GetUserWithRoleDTO.UserName, userStateOrganizationId).Select
+            var user = await _userRepository.Get(e => e.UserName == request.GetUserWithRoleDTO.UserName).Select
                  (e => new GetUserWithRoleDTO
                  {
                      UserId = e.Id,
                      UserName = e.UserName,
                      RoleIds = e.UserRole.Select(e => e.Id).ToList(),
                      Password = e.HashedPassword,
+                     OrganizationId = e.OrganizationId,
                  }).FirstOrDefaultAsync();
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.GetUserWithRoleDTO.Password, user.Password))
             {
-                return RequestResult<UserWithRoleResponseVM>.Failure("Invalid username or password");
+                return RequestResult<UserWithRoleResponseDTO>.Failure("Invalid username or password");
             }
 
-            return RequestResult<UserWithRoleResponseVM>.Success(mapper.Map<UserWithRoleResponseVM>(user));
+            return RequestResult<UserWithRoleResponseDTO>.Success(mapper.Map<UserWithRoleResponseDTO>(user));
         }
 
     }

@@ -33,7 +33,14 @@ namespace HRSystem.Features.Common.RoleFeature.Filters.Auth
         {
             var userState =  context.HttpContext.RequestServices.GetRequiredService<UserStateViewModel>();
 
-
+            userState.UserID = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var orgClaim = context.HttpContext.User.FindFirst("OrganizationId")?.Value;
+            if (Guid.TryParse(orgClaim,out var orgId))
+            {
+                userState.OrganizationId= orgId;
+            }
+            var roles = context.HttpContext.User.FindAll(ClaimTypes.Role).Select(e=>e.Value).ToList();
+            userState.RoleIds = roles;
 
             var path= context.HttpContext.Request.Path.Value?.Trim().ToLower();
             if (!string.IsNullOrEmpty(path) && path.EndsWith("/")) path = path.TrimEnd('/');
