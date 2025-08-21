@@ -11,7 +11,7 @@
 
 //namespace HRSystem.Features.OnBoarding.Orachstrator
 //{
-//    public record OnBoardingOrachstrator(OnBoardingResquestOrachstrator OnBoardingResquestOrachstrator) :IRequest<RequestResult<OnBoardingResponseOrachstrator>>;
+//    public record OnBoardingOrachstrator(OnBoardingResquestOrachstrator OnBoardingResquestOrachstrator) : IRequest<RequestResult<OnBoardingResponseOrachstrator>>;
 
 
 //    public class OnBoardingOrachstratorHandler : RequestHandlerBase<OnBoardingOrachstrator, OnBoardingResponseOrachstrator>

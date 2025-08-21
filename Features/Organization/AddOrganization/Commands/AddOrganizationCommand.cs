@@ -17,6 +17,7 @@ namespace HRSystem.Features.Organization.AddOrganization.Commands
         public override async Task<RequestResult<AddOrganizationReponseVM>> Handle(AddOrganizationCommand request, CancellationToken cancellationToken)
         {
            var res= await _OrganizationRepository.AddAsync(mapper.Map<HRSystem.Models.Organization>(request.AddOrganizationDTO));
+            await _OrganizationRepository.SaveChangesAsync();
            var response = mapper.Map<AddOrganizationReponseVM>(res);
            return RequestResult<AddOrganizationReponseVM>.Success(response);
         }
